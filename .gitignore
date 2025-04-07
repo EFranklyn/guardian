@@ -20,3 +20,10 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+.venv/
+installed/
+__pycache__/
+.env
+node_modules/
+test-results/
+pnpm-lock.yaml
