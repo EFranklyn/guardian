@@ -27,3 +27,4 @@ __pycache__/
 node_modules/
 test-results/
 pnpm-lock.yaml
+tests/e2e/data

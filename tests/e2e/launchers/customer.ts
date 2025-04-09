@@ -1,6 +1,6 @@
-// tests/e2e/launchers/customer.ts
 import { chromium, Page, Browser } from '@playwright/test';
 import dotenv from 'dotenv';
+import { interceptAndLog } from '../interceptors/interceptor';
 
 dotenv.config();
 
@@ -11,6 +11,11 @@ export class CustomerApp {
   async launch() {
     this.browser = await chromium.launch();
     this.page = await this.browser.newPage();
+
+    if (process.env.ENABLE_E2E_LOGS === 'true') {
+          await this.page.route('**', (route, request) => interceptAndLog(route, request, 'customer'));
+    }
+
     await this.page.goto(process.env.CUSTOMER_URL || 'http://localhost:3000');
     return this;
   }
