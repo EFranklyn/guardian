@@ -1,5 +1,6 @@
 import { chromium, Page, Browser } from '@playwright/test';
 import dotenv from 'dotenv';
+import { interceptAndLog } from '../interceptors/interceptor';
 
 dotenv.config();
 
@@ -13,6 +14,11 @@ export class AdminApp {
 
     console.info('[ADMIN] Launching AdminApp...');
     console.info('[ADMIN] Navigating to:', process.env.ADMIN_URL);
+    
+    if (process.env.ENABLE_E2E_LOGS === 'true') {
+      await this.page.route('**', (route, request) => interceptAndLog(route, request, 'admin'));
+    }
+    
     await this.page.goto(process.env.ADMIN_URL || 'http://localhost:3001');
 
     return this;

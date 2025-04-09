@@ -1,6 +1,6 @@
 import { _electron as electron, ElectronApplication, Page } from '@playwright/test';
-import path from 'path';
 import dotenv from 'dotenv';
+import { interceptAndLog } from '../interceptors/interceptor';
 
 dotenv.config();
 
@@ -14,6 +14,11 @@ export class POSApp {
       args: [],
     });
     this.page = await this.app.firstWindow();
+
+    if (process.env.ENABLE_E2E_LOGS === 'true') {
+      await this.page.route('**', (route, request) => interceptAndLog(route, request, 'pos'));
+    }
+    
     return this;
   }
 

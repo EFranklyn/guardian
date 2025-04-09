@@ -6,8 +6,11 @@
   "scripts": {
     "test": "vitest",
     "test:e2e": "playwright test --project=foodinn-restaurant",
-    "test:integration": "vitest run tests/integration",
-    "test:contract": "vitest run tests/contracts"
+    "simple:stats": "cross-env ENABLE_E2E_LOGS=true tsx tests/e2e/core/statsSimpleReporter.ts",
+    "complete:stats": "cross-env ENABLE_E2E_LOGS=true tsx tests/e2e/core/statsAllReporter.ts",
+    "show:all:stats": "pnpm simple:stats && pnpm complete:stats",
+    "test:e2e:logs": "cross-env ENABLE_E2E_LOGS=true pnpm test:e2e && pnpm simple:stats",
+    "show:stats": "pnpm show:all:stats"    
   },
   "keywords": [],
   "author": "",
@@ -19,9 +22,14 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.14.0",
     "axios": "^1.8.4",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "vitest": "^3.1.1"
+  },
+  "dependencies": {
+    "undici": "^7.7.0"
   }
 }
