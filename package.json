@@ -10,7 +10,8 @@
     "complete:stats": "cross-env ENABLE_E2E_LOGS=true tsx tests/e2e/core/statsAllReporter.ts",
     "show:all:stats": "pnpm simple:stats && pnpm complete:stats",
     "test:e2e:logs": "cross-env ENABLE_E2E_LOGS=true pnpm test:e2e && pnpm simple:stats",
-    "show:stats": "pnpm show:all:stats"    
+    "show:stats": "pnpm show:all:stats",
+    "test:e2e:app:admin": "playwright test --project=foodinn-app-admin"
   },
   "keywords": [],
   "author": "",

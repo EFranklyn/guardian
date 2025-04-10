@@ -13,6 +13,14 @@ export default defineConfig({
         screenshot: 'on',        
       },
     },
+    {
+      name: 'foodinn-app-admin',
+      testDir: './tests/e2e/apps/admin',
+      use: {
+        headless: false,
+        screenshot: 'on',        
+      },
+    },
   ],
   outputDir: 'test-results',
 });

@@ -43,6 +43,11 @@ export class AdminApp {
     console.info('[ADMIN] Login successful.');
   }
 
+  async goTo(path:string) {
+    await this.page.goto(`${process.env.ADMIN_URL}/${path}`, { waitUntil: 'networkidle' });
+    return this;
+  }
+
   async close() {
     console.info('[ADMIN] Closing AdminApp...');
     await this.browser.close();
