@@ -1,11 +1,16 @@
 import { defineConfig } from '@playwright/test';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 export default defineConfig({
-  testDir: './tests/e2e',
-  timeout: 150 * 1000,
-  retries: 0,
+  // testDir: './tests/', analyze if we will need this later
+  // timeout: 150 * 1000,
+  // retries: 0,
   projects: [
+    { name: 'adminSetup', 
+      testMatch: /adminSetup\.setup\.ts$/},
     {
       name: 'foodinn-restaurant',
       use: {
@@ -15,11 +20,16 @@ export default defineConfig({
     },
     {
       name: 'foodinn-app-admin',
-      testDir: './tests/e2e/apps/admin',
+      testDir: './tests/apps/admin',      
       use: {
+        baseURL: process.env.ADMIN_URL,
+        storageState: 'storage/admin-auth.json',
         headless: false,
-        screenshot: 'on',        
+        screenshot: 'on',
+        video: 'on',    
       },
+      dependencies: ['adminSetup'],
+      outputDir: 'test-results/apps/admin',
     },
   ],
   outputDir: 'test-results',
