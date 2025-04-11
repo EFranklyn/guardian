@@ -6,11 +6,22 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node"],
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+        "@fixtures/*": ["./fixtures/*"],
+        "@pages": ["pages/*"],
+        "@data": ["data/*"],
+      },
   },
   "type": "module",
   "include": [
     "src",
-    "tests"
-  ]
+    "tests",
+    "pages", 
+    "data",
+    "playwright.config.ts",
+    "setup"  ],
+  
 }
