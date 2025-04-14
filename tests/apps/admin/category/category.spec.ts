@@ -1,4 +1,4 @@
-import { test as base, expect } from '@fixtures/admin/adminFixtures';
+import { test as base, expect } from '@fixtures/admin/categoryFixture';
 import { faker } from '@faker-js/faker';
 import dotenv from 'dotenv';
 
