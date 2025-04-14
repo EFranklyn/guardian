@@ -1,4 +1,4 @@
-import { test as base, expect } from '@fixtures/adminFixtures';
+import { test as base, expect } from '@fixtures/admin/adminFixtures';
 import { faker } from '@faker-js/faker';
 import dotenv from 'dotenv';
 import { PROTECTED_ROUTES } from './mocks';

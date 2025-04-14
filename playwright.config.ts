@@ -7,6 +7,7 @@ export default defineConfig({
   // testDir: './tests/', analyze if we will need this later
   // timeout: 150 * 1000,
   // retries: 0,
+
   projects: [
     { name: 'adminSetup', 
       testMatch: /adminSetup\.setup\.ts$/,
@@ -24,13 +25,13 @@ export default defineConfig({
     },
     {
       name: 'foodinn-app-admin',
-      testDir: './tests/apps/admin',      
+      testDir: './tests/apps/admin',
       use: {
         baseURL: process.env.ADMIN_URL,
         storageState: 'storage/admin-auth.json',
         headless: false,
         screenshot: 'on',
-        video: 'on',    
+        video: 'on',
       },
       dependencies: ['adminSetup'],
       outputDir: 'test-results/apps/admin',
