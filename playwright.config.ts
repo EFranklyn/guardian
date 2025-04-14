@@ -3,14 +3,18 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
 export default defineConfig({
   // testDir: './tests/', analyze if we will need this later
   // timeout: 150 * 1000,
   // retries: 0,
   projects: [
     { name: 'adminSetup', 
-      testMatch: /adminSetup\.setup\.ts$/},
+      testMatch: /adminSetup\.setup\.ts$/,
+      use:{
+        baseURL: process.env.ADMIN_URL,
+
+      }
+    },
     {
       name: 'foodinn-restaurant',
       use: {

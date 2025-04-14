@@ -1,31 +1,34 @@
-// pages/admin/LoginPage.ts
 import { Page, Locator } from '@playwright/test';
 
 export class LoginPage {
   readonly page: Page;
-  readonly form: Locator;
-  readonly textSignIn: Locator;
-  readonly usernameIcon: Locator;
-  readonly passwordIcon: Locator;
-  readonly visibilityIcon: Locator;
+  readonly usernameInput: Locator;
   readonly signInButton: Locator;
-  readonly inputFields: Locator;
-  readonly allButtons: Locator;
+  readonly passwordInput: Locator;
+  readonly errorMessage: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.form = page.locator('form div').filter({ hasText: 'Sign In personUsernamelockPasswordvisibility' });
-    this.textSignIn = this.form.locator('span');
-    this.usernameIcon = page.locator('i.q-icon', { hasText: 'person' });
-    this.passwordIcon = page.locator('i.q-icon', { hasText: 'lock' });
-    this.visibilityIcon = page.locator('i.q-icon', { hasText: 'visibility' });
     this.signInButton = page.getByRole('button', { name: /sign in/i });
-    this.inputFields = page.locator('input');
-    this.allButtons = page.locator('button');
+    this.usernameInput = this.page.getByRole('textbox', { name: 'Username' })
+    this.passwordInput = this.page.getByRole('textbox', { name: 'Password' });
+    this.errorMessage = page.getByText('Incorrect username or password');
+
   }
 
   async goto() {
-    await this.page.goto('/admin/login');
+    await this.page.goto('login');
     await this.page.waitForURL('**/admin/login');
   }
+
+  async login(username: string, password: string) {    
+    await this.usernameInput.click();
+    await this.usernameInput.fill(username);
+    await this.passwordInput.click();
+    await this.passwordInput.fill(password);
+    await this.signInButton.click();
+  }
 }
+
+
+

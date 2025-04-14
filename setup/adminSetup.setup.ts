@@ -5,14 +5,15 @@ import fs from 'fs';
 dotenv.config();
 
 setup('Admin login storage state', async ({ page }) => {
-  const { ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_URL } = process.env;
+  const { ADMIN_USERNAME, ADMIN_PASSWORD, ADMIN_URL } = process.env;
 
-    if (!ADMIN_EMAIL || !ADMIN_PASSWORD || !ADMIN_URL) {
-        throw new Error('ADMIN_EMAIL, ADMIN_PASSWORD, and ADMIN_URL must be set in .env file');
+    if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !ADMIN_URL) {
+        throw new Error('ADMIN_USERNAME, ADMIN_PASSWORD, and ADMIN_URL must be set in .env file');
     }  
 
-  await page.goto(`${ADMIN_URL}/login`);
-  await page.fill('input[aria-label="Username"]', ADMIN_EMAIL);
+   await page.goto(`login`);
+  
+  await page.fill('input[aria-label="Username"]', ADMIN_USERNAME);
   await page.fill('input[aria-label="Password"]', ADMIN_PASSWORD);
   await page.getByRole('button', { name: /sign in/i }).click();
   await page.waitForURL('**/dashboard');
