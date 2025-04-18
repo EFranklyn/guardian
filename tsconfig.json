@@ -11,8 +11,9 @@
     "baseUrl": ".",
     "paths": {
         "@fixtures/*": ["./fixtures/*"],
-        "@pages": ["pages/*"],
-        "@data": ["data/*"],
+        "@pages/*": ["pages/*"],
+        "@schemas/*": ["data/*"],
+        "@builders/*": ["builders/*"],
       },
   },
   "type": "module",
