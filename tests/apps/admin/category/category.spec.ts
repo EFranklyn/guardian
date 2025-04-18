@@ -35,19 +35,16 @@ test.describe('Admin - Category create, edit and delete', () => {
     test('Should create category', async ({ categoryListPage, categoryFormCreatePage }) => {
       console.log('criação', category.name);
       await expect(categoryListPage.titleListPage).toBeVisible();
-      await categoryListPage.addCategoryButton.click();
       await expect(categoryFormCreatePage.headerCreateForm).toBeVisible();
       await categoryFormCreatePage.formFill(category)
       await categoryFormCreatePage.submit();
       await categoryListPage.selectCategory(category.name);
-      await categoryListPage.categorySelected.ariaSnapshot()
       await expect(categoryListPage.categorySelected).toBeVisible();
     });
 
 
     test('Should delete the created category', async ({ categoryListPage, categoryFormCreatePage }) => {
       console.log(category.name);
-      // await categoryListPage.page.pause()
       await categoryListPage.selectCategory(category.name);
       await categoryListPage.categorySelected.highlight();
       await categoryListPage.deleteCategory()
