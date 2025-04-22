@@ -10,18 +10,6 @@ dotenv.config();
 const test = base;
 
 
-test.describe('Admin - Category Page', () => {
-  test.describe.configure({ mode: 'parallel' });
-  
-  test.beforeEach(async ({ categoryListPage }) => {    
-    await categoryListPage.goto();
-  });
-  
-  test('Should display title when accessing Category list', async ({ categoryListPage }) => {
-    await expect(categoryListPage.titleListPage).toBeVisible();
-  });
-});
-
 test.describe('Admin - Category create, edit and delete', () => {
     test.describe.configure({ mode: 'serial' });
     
@@ -33,8 +21,8 @@ test.describe('Admin - Category create, edit and delete', () => {
     });
     
     test('Should create category', async ({ categoryListPage, categoryFormCreatePage }) => {
-      console.log('criação', category.name);
       await expect(categoryListPage.titleListPage).toBeVisible();
+      await categoryListPage.addCategoryButton.click()
       await expect(categoryFormCreatePage.headerCreateForm).toBeVisible();
       await categoryFormCreatePage.formFill(category)
       await categoryFormCreatePage.submit();
