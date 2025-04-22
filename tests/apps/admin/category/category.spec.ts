@@ -31,8 +31,7 @@ test.describe('Admin - Category create, edit and delete', () => {
     });
 
 
-    test('Should delete the created category', async ({ categoryListPage, categoryFormCreatePage }) => {
-      console.log(category.name);
+    test('Should delete the created category', async ({ categoryListPage }) => {
       await categoryListPage.selectCategory(category.name);
       await categoryListPage.categorySelected.highlight();
       await categoryListPage.deleteCategory()
