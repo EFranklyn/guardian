@@ -26,13 +26,17 @@ export class CategoryListPage {
 
   async selectCategory(categoryName: string) {
     this.categorySelected = this.page.getByRole('row')
-    .filter({ has: this.page.getByRole('cell', { name: categoryName })
+    .filter({ has: this.page.getByRole('cell', { name: new RegExp(`^${categoryName}$`, 'i') })
     });
   }
 
   async deleteCategory() {
     await this.categorySelected.getByRole('button').nth(2).click();
     await this.confirmModalButton.click();
+  }
+
+  async editCategory(){
+    await this.categorySelected.getByRole('button').nth(1).click();
   }
 
 }

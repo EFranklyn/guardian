@@ -13,7 +13,7 @@ const test = base;
 test.describe('Admin - Category create, edit and delete', () => {
     test.describe.configure({ mode: 'serial' });
     
-    const category = buildFakeCategory();
+    let category = buildFakeCategory();
     
     test.beforeEach(async ({ categoryListPage }) => {    
       await categoryListPage.goto();
@@ -30,10 +30,22 @@ test.describe('Admin - Category create, edit and delete', () => {
       await expect(categoryListPage.categorySelected).toBeVisible();
     });
 
+    test('Should edit the created category', async ({ categoryListPage, categoryFormEditPage }) => {
+      await categoryListPage.selectCategory(category.name);
+      await categoryListPage.editCategory()
+      
+      category.name = category.name + ' edit'
+      category.displayIn = ['KIOSK', 'TABLE']
+      await categoryFormEditPage.formFill(category)
+      await categoryFormEditPage.submit();
+      
+      await expect(categoryListPage.categorySelected).not.toBeVisible();
+      await categoryListPage.selectCategory(category.name);
+      await expect(categoryListPage.categorySelected).toBeVisible();
+    });
 
     test('Should delete the created category', async ({ categoryListPage }) => {
       await categoryListPage.selectCategory(category.name);
-      await categoryListPage.categorySelected.highlight();
       await categoryListPage.deleteCategory()
       
       await expect(categoryListPage.categorySelected).not.toBeVisible();
