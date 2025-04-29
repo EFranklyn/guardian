@@ -40,12 +40,13 @@ test.describe("Admin - Product create, edit and delete", () => {
     await productList.addProductButton.click();
 
     const productFormCreate = new ProductFormCreatePage(page);
-    
+
     await productFormCreate.page.waitForLoadState('networkidle')
     await expect(productFormCreate.headerCreateForm).toBeVisible()
     
     await productFormCreate.formFill(fakeProduct);
-    await page.pause();
-    await productFormCreate.page.pause();
+    await productFormCreate.submitButton.click();
+    await productFormCreate.page.pause()
+    // await productFormCreate.bu
   });
 });

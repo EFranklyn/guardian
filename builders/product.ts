@@ -6,10 +6,10 @@ import { buildFakeDisplayIn } from './displayIn';
 
 export const buildFakeProduct = (override: Partial<Product> = {}): Product => {
     const displayIn = buildFakeDisplayIn(override.displayIn) ?? buildFakeDisplayIn(override.displayIn)
-
+  const name = `E2E test ${faker.commerce.productName()}`
   return {
     uuid: faker.string.uuid(),
-    name: faker.commerce.productName(),
+    name,
     name2: faker.commerce.productAdjective(),
     description: faker.commerce.productDescription(),
     price: parseFloat(faker.commerce.price({ min: 10, max: 100 })),
@@ -18,7 +18,7 @@ export const buildFakeProduct = (override: Partial<Product> = {}): Product => {
     disabled: false,
     rank: faker.number.int({ min: 1, max: 100 }),
     categoryName: faker.commerce.department(),
-    drsDeposit: faker.number.float({ min: 0, max: 5 }),
+    drsDeposit: parseFloat(faker.commerce.price({ min: 0, max: 3 })),
     imageUrl: faker.image.url(),
     addongroups: [buildFakeAddOnGroup({displayIn})],
     openFood: false,

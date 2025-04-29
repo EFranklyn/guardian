@@ -18,6 +18,7 @@ export class ProductFormCreatePage {
   readonly inputPrice: Locator;
   readonly inputDescription: Locator;
   readonly addAddonGroupButton: Locator;
+  readonly submitButton: Locator 
 
   constructor(page: Page) {
     this.page = page;
@@ -48,6 +49,8 @@ export class ProductFormCreatePage {
     this.inputDescription = this.page.getByRole("textbox", {
       name: "Description",
     });
+
+    this.submitButton = this.page.getByRole('button', { name: 'Submit' });
   }
 
   async init() {
