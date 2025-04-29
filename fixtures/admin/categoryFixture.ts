@@ -3,6 +3,16 @@ import { CategoryListPage } from '@pages/admin/category/CategoryListPage';
 import { CategoryFormCreatePage } from '@pages/admin/category/CategoryFormCreatePage';
 import { CategoryFormEditPage } from '@pages/admin/category/CategoryFormEditPage';
 
+
+
+
+// test.beforeAll(async ({ browser }) => {
+//   const page = await browser.newPage();
+//   // ...
+// });
+
+// isso vai resolver o problema que Levi Relatou sobre vários reinicios do caso de teste (cada teste acesso)
+
 export type CategoryFixture = {
     categoryListPage: CategoryListPage
     categoryFormCreatePage: CategoryFormCreatePage

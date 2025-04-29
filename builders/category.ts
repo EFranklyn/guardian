@@ -1,9 +1,8 @@
-import { faker } from '@faker-js/faker';
-import { Category } from '../schemas/category';
-
+import { faker } from "@faker-js/faker";
+import { Category } from "../schemas/category";
 
 const buildFakeCategory = (override: Partial<Category> = {}): Category => {
-    const name = `E2E test ${faker.food.ethnicCategory()}`;
+  const name = `E2E test ${faker.food.ethnicCategory()}`;
   return {
     uuid: faker.string.uuid(),
     name,
@@ -16,17 +15,16 @@ const buildFakeCategory = (override: Partial<Category> = {}): Category => {
     composeName: false,
     disabled: false,
     alwaysAvailable: true,
-    fontColor: '#FFFFFF',
-    bgColor1: '#FF0000',
-    bgColor2: '#AA0000',
-    onlineFontColor: '#000000',
-    onlineBgColor: '#EEEEEE',
-    displayIn: ['POS', 'ONLINE'],
-    displayInPosition: ['POS (SIDE)', 'TABLE (SIDE)'],
+    fontColor: "#FFFFFF",
+    bgColor1: "#FF0000",
+    bgColor2: "#AA0000",
+    onlineFontColor: "#000000",
+    onlineBgColor: "#EEEEEE",
+    displayIn: ["POS", "ONLINE"],
+    displayInPosition: ["POS (SIDE)", "TABLE (SIDE)"],
     daysAvailable: [],
     ...override,
   };
-}
+};
 
-
-export { buildFakeCategory }
+export { buildFakeCategory };

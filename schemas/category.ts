@@ -35,7 +35,7 @@ const DayAvailableSchema = z.object({
   start: RequiredStringSchema,
   end: RequiredStringSchema
 });
-
+//you not need this, use inteface
 const CategoryBaseSchema = z.object({
   uuid: z.string(),
   rank: z.number(),
@@ -44,7 +44,7 @@ const CategoryBaseSchema = z.object({
   name: RequiredStringSchema,
   imageUrl: z.string(),
   description: z.string(),
-  displayIn: CategoryDisplayInSchema,
+  displayIn: z.string().array(),
   displayInPosition: z.array(DisplayInPositionSchema),
   vat: z.number(),
   disabled: z.boolean(),

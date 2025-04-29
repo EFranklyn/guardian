@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:app:admin": "playwright test --project=foodinn-app-admin "
+    "test:app:admin": "playwright test --project=foodinn-app-admin"
   },
   "keywords": [],
   "author": "",
