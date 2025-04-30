@@ -1,5 +1,5 @@
-import { test, expect } from "@fixtures/admin/categoryFixture";
-import { faker } from "@faker-js/faker";
+import { test, Browser, Page, BrowserContext, expect } from "@playwright/test";
+
 import dotenv from "dotenv";
 
 import { buildFakeCategory } from "@builders/category";
@@ -7,32 +7,38 @@ import { Category } from "schemas/category";
 import { ProductListPage } from "@pages/admin/product/ProductListPage";
 import { ProductFormCreatePage } from "@pages/admin/product/ProductFormCreatePage";
 import { buildFakeProduct } from "../../../../builders/product";
+import { CategoryContext } from "@pages/admin/category/CategoryPage";
 
 dotenv.config();
 
-// await page.goto('https://write-box.appspot.com/');
-//         await page.getByRole('button', { name: 'x' }).click();
-//         await page.locator('.sc-hMFtBS').click();
-//         await page.locator('#editor').click();
-//         await page.locator('#editor').fill(JSON.stringify(fakeProduct));
 
+//config of test from tests globals, where the context is equal
 test.describe("Admin - Product create, edit and delete", () => {
   test.describe.configure({ mode: "serial" });
 
-  // let category = buildFakeCategory();
+  let context: BrowserContext;
+  let page: Page;
+  let categoryContext: CategoryContext;
+  let category: Category;
 
-  // test.beforeEach(async ({ categoryListPage }) => {
-  //   await categoryListPage.goto();
-  //   console.log(category.name);
-  // });
+  test.beforeAll(async ({ browser }) => {
+    context = await browser.newContext(); 
+    page = await context.newPage();
 
-  test("Should create product", async ({ page }) => {
-    const category = buildFakeCategory();
+    categoryContext = new CategoryContext(page);
+    category = buildFakeCategory();
+    await categoryContext.createCategory(category);
+    console.log(category.name)
+  });
 
-    //create, category before of create product (think in POM)
+  test.afterAll(async () => {
+    await context.close();
+  });
+
+  test("Should create product", async () => {
     const fakeProduct = buildFakeProduct({
       displayIn: category.displayIn,
-      categoryName: 'Sundae'
+      categoryName: category.name
     });
 
     const productList = new ProductListPage(page);    
@@ -46,7 +52,5 @@ test.describe("Admin - Product create, edit and delete", () => {
     
     await productFormCreate.formFill(fakeProduct);
     await productFormCreate.submitButton.click();
-    await productFormCreate.page.pause()
-    // await productFormCreate.bu
   });
 });

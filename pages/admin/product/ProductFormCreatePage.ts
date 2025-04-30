@@ -60,13 +60,24 @@ export class ProductFormCreatePage {
   }
 
 
+  // mover
+  async tryFindOption(option: Locator, page: Page): Promise<void> {
+  
+    try {
+      await option.waitFor({ state: "visible", timeout: 20 });
+      return;
+    } catch (e) {
+      await page.keyboard.press('ArrowDown');
+      return this.tryFindOption(option, page);
+    }
+  }
+
 
   async setCategory(categoryName: string) {
     await this.selectCategory.click();
     const option = this.page.getByRole("option", { name: categoryName });
-    await option.waitFor({ state: "visible" });
+    await this.tryFindOption(option, this.page);
     await option.click();
-
   }
 
   async fillDisplayIn(displayIn: string[]) {
