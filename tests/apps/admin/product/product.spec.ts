@@ -52,5 +52,12 @@ test.describe("Admin - Product create, edit and delete", () => {
     
     await productFormCreate.formFill(fakeProduct);
     await productFormCreate.submitButton.click();
+    await expect(productList.titleListPage).toBeVisible();
+
+    await productList.clearFindProduct()
+    await productList.findProductByName(fakeProduct.name);
+
+    await productList.selectProduct(fakeProduct.name);
+    await expect(productList.productSelected).toBeVisible();
   });
 });
