@@ -20,7 +20,7 @@ export const buildFakeProduct = (override: Partial<Product> = {}): Product => {
     categoryName: faker.commerce.department(),
     drsDeposit: parseFloat(faker.commerce.price({ min: 0, max: 3 })),
     imageUrl: faker.image.url(),
-    addongroups: [buildFakeAddOnGroup({displayIn})],
+    addOnGroups: [buildFakeAddOnGroup({displayIn})],
     openFood: false,
     ...override,
   };

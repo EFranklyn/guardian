@@ -65,17 +65,18 @@ import { buildFakeDisplayIn } from "./displayIn";
     override: Partial<AddOnGroup> = {}
   ): AddOnGroup => {
     const displayIn = override.displayIn ?? buildFakeDisplayIn()
-    
+
+    const name = `E2E test ${faker.commerce.productName()}`
     
     return {
       uuid: faker.string.uuid(),
-      name: faker.commerce.department(),
+      name,
       displayIn,
       displayInOption: ["In Menu"],
       maxChoices: 3,
       minChoices: 1,
       freeAmount: 1,
-      showName: true,
+      showName: false,
       fontColor: "#000000",
       bgColor1: "#FFFFFF",
       bgColor2: "#EEEEEE",

@@ -1,9 +1,13 @@
 import { Page, Locator } from "@playwright/test";
 import { Category } from "schemas/category";
 import { Product } from "schemas/product";
+import {ProductAddonManager} from "@pages/admin/product/ProductAddonManager";
+import {AddOnGroup} from "../../../schemas/addon";
 
 export class ProductFormCreatePage {
   readonly page: Page;
+  readonly addonManager: ProductAddonManager
+
   readonly headerCreateForm: Locator;
   readonly inputName: Locator;
   readonly inputName2: Locator;
@@ -17,13 +21,11 @@ export class ProductFormCreatePage {
   readonly inputDrsDeposit: Locator;
   readonly inputPrice: Locator;
   readonly inputDescription: Locator;
-  readonly addAddonGroupButton: Locator;
   readonly submitButton: Locator 
 
   constructor(page: Page) {
     this.page = page;
-
-    this.addAddonGroupButton = this.page.getByRole('button').filter({ hasText: 'add' })
+    this.addonManager = new ProductAddonManager(page)
 
     this.headerCreateForm = this.page.getByText("arrow_back Create Product");
 
@@ -51,13 +53,18 @@ export class ProductFormCreatePage {
     });
 
     this.submitButton = this.page.getByRole('button', { name: 'Submit' });
+
+
   }
 
-  async init() {
-    await this.page.waitForResponse(response =>
-      response.url().includes('/categories') && response.status() === 200
-    );
+  async addAddonGroup(addonGroup: AddOnGroup) {
+    await this.addonManager.addAddonGroupButton.click()
+    // await this.page.getByText('Options deleteinfoadd').nth(2).click();
+    await this.addonManager.addonGroupFormFill(addonGroup)
+
+
   }
+
 
 
   // mover

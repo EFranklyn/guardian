@@ -14,6 +14,6 @@ export interface Product {
   categoryName: string;
   drsDeposit: number;
   imageUrl: string;
-  addongroups: AddOnGroup[],
+  addOnGroups: AddOnGroup[],
   openFood: boolean   // alert
 }
