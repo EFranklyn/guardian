@@ -1,4 +1,4 @@
-import { test, Browser, Page, BrowserContext, expect } from "@playwright/test";
+import { test, Page, BrowserContext, expect } from "@playwright/test";
 
 import dotenv from "dotenv";
 
@@ -6,11 +6,16 @@ import { buildFakeCategory } from "@builders/category";
 import { Category } from "schemas/category";
 import { ProductListPage } from "@pages/admin/product/ProductListPage";
 import { ProductFormCreatePage } from "@pages/admin/product/ProductFormCreatePage";
-import { buildFakeProduct } from "../../../../builders/product";
+import { buildFakeProduct } from "@builders/product";
 import { CategoryContext } from "@pages/admin/category/CategoryPage";
+import {Product} from "../../../../schemas/product";
 
 dotenv.config();
 
+interface TestProduct {
+  testName:string;
+  product: Product;
+}
 
 //config of test from tests globals, where the context is equal
 test.describe("Admin - Product create, edit and delete", () => {
@@ -20,6 +25,8 @@ test.describe("Admin - Product create, edit and delete", () => {
   let page: Page;
   let categoryContext: CategoryContext;
   let category: Category;
+  let productsForTest: TestProduct[] = [];
+  let productList: ProductListPage;
 
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext(); 
@@ -28,21 +35,21 @@ test.describe("Admin - Product create, edit and delete", () => {
     categoryContext = new CategoryContext(page);
     category = buildFakeCategory();
     await categoryContext.createCategory(category);
-    console.log(category.name)
+    productList = new ProductListPage(page);
+    await productList.goto();
   });
 
   test.afterAll(async () => {
     await context.close();
+    console.log(productsForTest)
   });
 
-  test("Should create product", async () => {
+  test("Should create product without addons", async () => {
     const fakeProduct = buildFakeProduct({
       displayIn: category.displayIn,
       categoryName: category.name
     });
 
-    const productList = new ProductListPage(page);    
-    await productList.goto();
     await productList.addProductButton.click();
 
     const productFormCreate = new ProductFormCreatePage(page);
@@ -59,5 +66,8 @@ test.describe("Admin - Product create, edit and delete", () => {
 
     await productList.selectProduct(fakeProduct.name);
     await expect(productList.productSelected).toBeVisible();
+
+
+    productsForTest.push({testName:test.info().title, product: fakeProduct}) // improve this
   });
 });
