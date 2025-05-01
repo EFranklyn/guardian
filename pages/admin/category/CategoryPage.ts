@@ -23,4 +23,10 @@ export class CategoryContext {
         await this.formCreate.formFill(category)
         await this.formCreate.submit();
     }
+
+    async deleteCategory(categoryName: string) {
+        this.listPage.goto()
+        await this.listPage.selectCategory(categoryName);
+        await this.listPage.deleteCategory();
+    }
 }

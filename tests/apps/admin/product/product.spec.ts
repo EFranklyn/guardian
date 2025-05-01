@@ -9,6 +9,7 @@ import { ProductFormCreatePage } from "@pages/admin/product/ProductFormCreatePag
 import { buildFakeProduct } from "@builders/product";
 import { CategoryContext } from "@pages/admin/category/CategoryPage";
 import {Product} from "../../../../schemas/product";
+import {ProductPage} from "@pages/admin/product/ProductPage";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ test.describe("Admin - Product create, edit and delete", () => {
   let context: BrowserContext;
   let page: Page;
   let categoryContext: CategoryContext;
+
   let category: Category;
   let productsForTest: TestProduct[] = [];
   let productList: ProductListPage;
@@ -39,9 +41,16 @@ test.describe("Admin - Product create, edit and delete", () => {
     await productList.goto();
   });
 
+  // use this only dev times or improve this poha
   test.afterAll(async () => {
+    const productContext = new ProductPage(page);
+    await productContext.listPage.goto();
+    for (const product of productsForTest) {
+      await productContext.deleteProduct(product.product.name);
+    }
+
+    await categoryContext.deleteCategory(category.name);
     await context.close();
-    console.log(productsForTest)
   });
 
   test("Should create product without addons", async () => {

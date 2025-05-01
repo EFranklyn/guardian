@@ -43,5 +43,10 @@ export class ProductListPage {
         });
     }
 
+    async deleteProduct() {
+        await this.productSelected.getByRole('button').nth(2).click();
+        await this.page.getByRole('button', {name: 'OK'}).click();
+    }
+
 
 }
