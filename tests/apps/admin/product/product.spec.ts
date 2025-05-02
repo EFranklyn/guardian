@@ -10,7 +10,8 @@ import { buildFakeProduct } from "@builders/product";
 import { CategoryContext } from "@pages/admin/category/CategoryPage";
 import {Product} from "../../../../schemas/product";
 import {ProductPage} from "@pages/admin/product/ProductPage";
-import {buildFakeAddOnGroup} from "@builders/addons";
+import {buildFakeAddOn, buildFakeAddOnGroup} from "@builders/addons";
+import {faker} from "@faker-js/faker";
 
 dotenv.config();
 
@@ -41,18 +42,9 @@ test.describe("Admin - Product create, edit and delete", () => {
     productList = new ProductListPage(page);
     await productList.goto();
 
-    // const fakeProducts: Product[] = Array.from({ length: 50 }, () =>
-    //     buildFakeProduct({
-    //       displayIn: category.displayIn,
-    //       categoryName: category.name
-    //     })
-    // );
-    //
-    // console.log(fakeProducts)
-
   });
 
-  // use this only dev times or improve this poha
+  // use this only dev mode or improve this poha
   test.afterAll(async () => {
     const productContext = new ProductPage(page);
     await productContext.listPage.goto();
@@ -92,18 +84,21 @@ test.describe("Admin - Product create, edit and delete", () => {
   // });
 
   test("Should create product with addons", async () => {
+    test.setTimeout(34000); //security time
+
     const fakeProduct: Product = buildFakeProduct({
       displayIn: category.displayIn,
       categoryName: category.name,
     });
 
-    fakeProduct.addOnGroups = Array.from({ length: 15 }, () =>
+    fakeProduct.addOnGroups = Array.from({ length: 2 }, () =>
         buildFakeAddOnGroup({
           displayIn: fakeProduct.displayIn,
+          addons: Array.from({ length: 2 }, () =>
+              buildFakeAddOn()
+          )
         })
     );
-
-
 
     await productList.addProductButton.click();
 
@@ -112,20 +107,18 @@ test.describe("Admin - Product create, edit and delete", () => {
     await productFormCreate.page.waitForLoadState('networkidle')
     await expect(productFormCreate.headerCreateForm).toBeVisible()
 
+    await productFormCreate.formFill(fakeProduct);
     for (const addOnGroup of fakeProduct.addOnGroups) {
       await productFormCreate.addonManager.addAddonGroupButton.click();
       await productFormCreate.addonManager.addonGroupFormFill(addOnGroup);
-      // await productFormCreate.page.pause()
 
+
+      for (let addOnIndex = 0; addOnIndex < addOnGroup.addons.length; addOnIndex++) {
+        const addOn = addOnGroup.addons[addOnIndex];
+        await productFormCreate.addonManager.clickToAddNewAddOn();
+        await productFormCreate.addonManager.addOnFormFill(addOnIndex, addOn);
+      }
     }
-
-
-    // await productFormCreate.page.pause()
-
-    return
-    await productFormCreate.formFill(fakeProduct);
-
-
 
 
     await productFormCreate.submitButton.click();
@@ -137,7 +130,6 @@ test.describe("Admin - Product create, edit and delete", () => {
     await productList.selectProduct(fakeProduct.name);
     await expect(productList.productSelected).toBeVisible();
 
-
-    productsForTest.push({testName:test.info().title, product: fakeProduct}) // improve this
+    productsForTest.push({testName:test.info().title, product: fakeProduct})
   });
 });

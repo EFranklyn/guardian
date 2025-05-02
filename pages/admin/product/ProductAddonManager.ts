@@ -1,5 +1,5 @@
 import {Locator, Page} from "@playwright/test";
-import {AddOnGroup} from "../../../schemas/addon";
+import {AddOn, AddOnGroup} from "../../../schemas/addon";
 
 export class ProductAddonManager {
     readonly page: Page;
@@ -14,33 +14,128 @@ export class ProductAddonManager {
     checkboxShowName: Locator;
     checkboxDisabled: Locator;
     addAddonButton: Locator;
+    formAddOnGroup: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.addAddonGroupButton = this.page.getByRole('button').filter({hasText: /^add$/})
+        this.addAddonGroupButton = this.page.getByRole('toolbar')
+            .filter({ hasText: 'Options deleteinfoadd' }).getByRole('button')
+
+
         { // Addon Group form
+            this.formAddOnGroup = this.page.getByRole('tabpanel').first()
             this.inputName = this.page.getByRole('textbox', {name: 'Name'}).nth(2);
             this.selectDependencies = this.page.getByRole('textbox', {name: 'Name'}).nth(2);
-            this.selectDisplayIn = this.page.locator('div').filter({hasText: /^Display In$/}).nth(2)
+            // this.selectDisplayIn = this.page.locator('div').filter({hasText: /^Display In$/}).nth(2)
+            this.selectDisplayIn = this.page.locator('div').filter({ hasText: /^arrow_drop_down$/ }).nth(3)
             this.inputMaxChoices = this.page.getByRole('spinbutton', {name: 'Max Choices'})
             this.inputMinChoices = this.page.getByRole('spinbutton', {name: 'Min Choices'})
             this.inputFreeAmount = this.page.getByRole('spinbutton', {name: 'Free Amount'})
             this.checkboxHideAddonsName = this.page.getByRole('checkbox', {name: 'Hide Addons Name'})
             this.checkboxShowName = this.page.getByRole('checkbox', {name: 'Show Name'})
             this.checkboxDisabled = this.page.getByRole('checkbox', {name: 'Disabled'}).nth(1)
-            this.addAddonButton = this.page.getByRole('button', {name: 'Add Addon'})
+            this.addAddonButton = this.page.getByRole('button', {name: 'Add Addon'}) // resolve this desgraça
+        }
+
+
+
+
+        // await page.locator('.q-tab-panel > div:nth-child(2) > div:nth-child(2)').click();
+    }
+
+
+    async addOnFormFill(index:number, addOn:AddOn){
+
+        const cardAddon = await this.page.getByText('drag_indicator NameName');
+        const formAddOn = cardAddon.nth(index)
+        await formAddOn.getByRole('textbox', {name: 'Name', exact: true }).click();
+        await formAddOn.getByRole('textbox', {name: 'Name', exact: true }).fill(addOn.name);
+        await formAddOn.getByRole('textbox', { name: 'Name 2', exact: true }).click();
+        await formAddOn.getByRole('textbox', { name: 'Name 2', exact: true }).fill(addOn.name2);
+        await formAddOn.getByText('Compose Namearrow_drop_down').click()
+        await formAddOn.getByText('Compose Namearrow_drop_down').click()
+        await formAddOn.locator('label').filter({ hasText: '€Price' }).getByLabel('Price').click();
+        await formAddOn.locator('label').filter({ hasText: '€Price' }).getByLabel('Price').fill(addOn.price.toString());
+        await formAddOn.getByText('Show Price (Online)arrow_drop_down').click();
+        await formAddOn.getByText('Show Price (Online)arrow_drop_down').click();
+
+        await formAddOn.getByText('€Table Price').click();
+        addOn.price2 > 0 && await formAddOn.getByText('€Table Price').fill(addOn.price2.toString());
+
+        await formAddOn.getByRole('textbox', { name: 'VAT Price' }).click()
+        addOn.vatPrice > 0 && await formAddOn.getByRole('textbox', { name: 'VAT Price' }).fill(addOn.vatPrice.toString());
+
+        await formAddOn.getByRole('textbox', { name: 'VAT %' }).click();
+        addOn.vatPerc > 0 && await formAddOn.getByRole('textbox', { name: 'VAT %' }).fill(addOn.vatPerc.toString());
+
+        await formAddOn.locator('label').filter({ hasText: '€DRS Deposit' }).getByLabel('DRS Deposit').click();
+        addOn.drsDeposit > 0 && await formAddOn.locator('label').filter({ hasText: '€DRS Deposit' }).getByLabel('DRS Deposit').fill(addOn.drsDeposit.toString());
+    }
+
+    async clickToAddNewAddOn(){
+        if(await this.addAddonButton.isVisible()){
+            await this.addAddonButton.click()
+        }else{
+            await this.page.locator('div').filter({ hasText: /^add$/ }).getByRole('button').click()
         }
     }
 
-    async fillDisplayIn(displayIn: string[]): Promise<void> {
+    async test(){
+        // const loc = await this.page.locator('.q-tab-panel > div:nth-child(2) > div:nth-child(2)')
+        // page.locator('div').filter({ hasText: /^add$/ }).getByRole('button')
+        // await this.page.pause()
+
+
+
+
+        // isso aqui foi o necessario para lidar com addons, é selecionado o card onde estão os elementos, a partir dai
+        // é possveil buscar os elementos, o .all noseletor trara todos na telas em array
+        //
+        // await this.addAddonGroupButton.click()
+        // await this.addAddonButton.click()
+        // let allEl = await this.page.getByText('drag_indicator NameName');
+        // await this.addOnFormFill(allEl.nth(0))
+        //
+        // await allEl.click()
+        // await this.page.locator('div').filter({ hasText: /^add$/ }).getByRole('button').click()
+        // allEl = await this.page.getByText('drag_indicator NameName');
+        // await this.addOnFormFill(allEl.nth(1))
+        // const tl = await this.page.getByText('drag_indicator NameName').all()
+        // console.log(tl.length)
+
+        // for (const el of allEl) {
+        //     await el.click();
+        // }
+    }
+
+
+    // async fillDisplayIn(displayIn: string[]): Promise<void> {
+    //     await this.selectDisplayIn.click();
+    //
+    //     for (const display of displayIn) {
+    //         await this.page.waitForTimeout(2000)
+    //         await this.page.getByRole("option", { name: display }).click();
+    //     }
+    //
+    //     await this.selectDisplayIn.press('Escape');
+    //
+    // }
+
+    async fillDisplayIn(displayIn: string[]) {
         await this.selectDisplayIn.click();
+        const options = await this.page.getByRole('option').all()
+        for(const opition of options){
+            const displayInName = await opition.textContent()
+            const isSelected = Boolean(await opition.getAttribute('aria-selected') === 'true')
+            const hasDisplayIn = displayInName && displayIn.includes(displayInName)
 
-        for (const display of displayIn) {
-            await this.page.getByRole("option", { name: display }).click();
+            if(!isSelected && hasDisplayIn){
+                await opition.click()
+            }else if(isSelected && !hasDisplayIn){
+                await opition.click()
+            }
         }
-
-        await this.selectDisplayIn.press('Escape');
-
+        await this.selectDisplayIn.click();
     }
 
     async addonGroupFormFill(addonGroup:AddOnGroup): Promise<void>{
