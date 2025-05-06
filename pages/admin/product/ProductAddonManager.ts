@@ -80,46 +80,6 @@ export class ProductAddonManager {
         }
     }
 
-    async test(){
-        // const loc = await this.page.locator('.q-tab-panel > div:nth-child(2) > div:nth-child(2)')
-        // page.locator('div').filter({ hasText: /^add$/ }).getByRole('button')
-        // await this.page.pause()
-
-
-
-
-        // isso aqui foi o necessario para lidar com addons, é selecionado o card onde estão os elementos, a partir dai
-        // é possveil buscar os elementos, o .all noseletor trara todos na telas em array
-        //
-        // await this.addAddonGroupButton.click()
-        // await this.addAddonButton.click()
-        // let allEl = await this.page.getByText('drag_indicator NameName');
-        // await this.addOnFormFill(allEl.nth(0))
-        //
-        // await allEl.click()
-        // await this.page.locator('div').filter({ hasText: /^add$/ }).getByRole('button').click()
-        // allEl = await this.page.getByText('drag_indicator NameName');
-        // await this.addOnFormFill(allEl.nth(1))
-        // const tl = await this.page.getByText('drag_indicator NameName').all()
-        // console.log(tl.length)
-
-        // for (const el of allEl) {
-        //     await el.click();
-        // }
-    }
-
-
-    // async fillDisplayIn(displayIn: string[]): Promise<void> {
-    //     await this.selectDisplayIn.click();
-    //
-    //     for (const display of displayIn) {
-    //         await this.page.waitForTimeout(2000)
-    //         await this.page.getByRole("option", { name: display }).click();
-    //     }
-    //
-    //     await this.selectDisplayIn.press('Escape');
-    //
-    // }
 
     async fillDisplayIn(displayIn: string[]) {
         await this.selectDisplayIn.click();

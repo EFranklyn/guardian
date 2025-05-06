@@ -56,36 +56,34 @@ test.describe("Admin - Product create, edit and delete", () => {
     await context.close();
   });
 
-  // test("Should create product without addons", async () => {
-  //   const fakeProduct = buildFakeProduct({
-  //     displayIn: category.displayIn,
-  //     categoryName: category.name
-  //   });
-  //
-  //   await productList.addProductButton.click();
-  //
-  //   const productFormCreate = new ProductFormCreatePage(page);
-  //
-  //   await productFormCreate.page.waitForLoadState('networkidle')
-  //   await expect(productFormCreate.headerCreateForm).toBeVisible()
-  //
-  //   await productFormCreate.formFill(fakeProduct);
-  //   await productFormCreate.submitButton.click();
-  //   await expect(productList.titleListPage).toBeVisible();
-  //
-  //   await productList.clearFindProduct()
-  //   await productList.findProductByName(fakeProduct.name);
-  //
-  //   await productList.selectProduct(fakeProduct.name);
-  //   await expect(productList.productSelected).toBeVisible();
-  //
-  //
-  //   productsForTest.push({testName:test.info().title, product: fakeProduct}) // improve this
-  // });
+  test("Should create product without addons", async () => {
+    const fakeProduct = buildFakeProduct({
+      displayIn: category.displayIn,
+      categoryName: category.name
+    });
+
+    await productList.addProductButton.click();
+
+    const productFormCreate = new ProductFormCreatePage(page);
+
+    await productFormCreate.page.waitForLoadState('networkidle')
+    await expect(productFormCreate.headerCreateForm).toBeVisible()
+
+    await productFormCreate.formFill(fakeProduct);
+    await productFormCreate.submitButton.click();
+    await expect(productList.titleListPage).toBeVisible();
+
+    await productList.clearFindProduct()
+    await productList.findProductByName(fakeProduct.name);
+
+    await productList.selectProduct(fakeProduct.name);
+    await expect(productList.productSelected).toBeVisible();
+
+
+    productsForTest.push({testName:test.info().title, product: fakeProduct}) // improve this
+  });
 
   test("Should create product with addons", async () => {
-    test.setTimeout(34000); //security time
-
     const fakeProduct: Product = buildFakeProduct({
       displayIn: category.displayIn,
       categoryName: category.name,
@@ -120,7 +118,6 @@ test.describe("Admin - Product create, edit and delete", () => {
       }
     }
 
-
     await productFormCreate.submitButton.click();
     await expect(productList.titleListPage).toBeVisible();
 
@@ -131,5 +128,9 @@ test.describe("Admin - Product create, edit and delete", () => {
     await expect(productList.productSelected).toBeVisible();
 
     productsForTest.push({testName:test.info().title, product: fakeProduct})
+    // (46 * 19), talk with Levis about test with many addons
   });
+
+
+
 });
