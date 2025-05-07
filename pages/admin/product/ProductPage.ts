@@ -15,6 +15,7 @@ export class ProductPage {
         await this.listPage.findProductByName(productName);
         await this.listPage.selectProduct(productName);
         await this.listPage.deleteProduct();
+        await this.listPage.page.waitForLoadState('networkidle')
 
     }
 

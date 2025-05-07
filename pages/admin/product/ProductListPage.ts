@@ -29,12 +29,15 @@ export class ProductListPage {
         await this.inputFindName.click();
         await this.inputFindName.fill(name);
         await this.page.keyboard.press('Enter');
+        await this.page.waitForLoadState('networkidle')
+
     }
 
     async clearFindProduct() {
         await this.inputFindName.click();
         await this.inputFindName.fill('');
         await this.page.keyboard.press('Enter');
+        await this.page.waitForLoadState('networkidle')
     }
 
     async selectProduct(productName: string) {

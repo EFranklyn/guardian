@@ -18,7 +18,7 @@ export class CategoryContext {
     }
 
     async createCategory(category: Category) {
-        this.listPage.goto()
+        await this.listPage.goto()
         await this.listPage.addCategoryButton.click();
         await this.formCreate.formFill(category)
         await this.formCreate.submit();

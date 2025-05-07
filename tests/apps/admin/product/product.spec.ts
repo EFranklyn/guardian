@@ -37,7 +37,7 @@ test.describe("Admin - Product create, edit and delete", () => {
     page = await context.newPage();
 
     categoryContext = new CategoryContext(page);
-    category = buildFakeCategory();
+    category = buildFakeCategory({displayIn: ['TABLE','POS', 'ONLINE']});
     await categoryContext.createCategory(category);
     productList = new ProductListPage(page);
     await productList.goto();
@@ -81,6 +81,38 @@ test.describe("Admin - Product create, edit and delete", () => {
 
 
     productsForTest.push({testName:test.info().title, product: fakeProduct}) // improve this
+  });
+
+  test("Should create an open food product with a price for tables and not finalize the creation.", async () => {
+    // This test is expected to fail until the implementation is fixed GLC-1807
+    test.fail(true, "GLC-1807");
+    const fakeProduct = buildFakeProduct({
+      displayIn: ['POS'],
+      categoryName: category.name,
+      openFood: true,
+      price2: 200
+    });
+
+
+    await productList.addProductButton.click();
+
+    const productFormCreate = new ProductFormCreatePage(page);
+
+    await productFormCreate.page.waitForLoadState('networkidle')
+
+    await expect(productFormCreate.headerCreateForm).toBeVisible()
+    await productFormCreate.formFill(fakeProduct);
+
+    await productFormCreate.submitButton.click();
+    await productFormCreate.page.waitForLoadState('networkidle')
+
+    await expect(productFormCreate.submitButton).not.toBeVisible();
+    await expect(productFormCreate.headerCreateForm).toBeVisible();
+    await expect(productList.titleListPage).not.toBeVisible();
+
+    productsForTest.push({testName:test.info().title, product: fakeProduct}) // improve this
+
+
   });
 
   test("Should create product with addons", async () => {
@@ -131,6 +163,37 @@ test.describe("Admin - Product create, edit and delete", () => {
     // (46 * 19), talk with Levis about test with many addons
   });
 
+  test("should try to create product with addongroup without addon and show error message", async () => {
+    const fakeProduct: Product = buildFakeProduct({
+      displayIn: category.displayIn,
+      categoryName: category.name,
+    });
 
+    fakeProduct.addOnGroups = [buildFakeAddOnGroup({
+      displayIn: fakeProduct.displayIn
+    })]
 
+    await productList.addProductButton.click();
+
+    const productFormCreate = new ProductFormCreatePage(page);
+
+    await productFormCreate.page.waitForLoadState('networkidle')
+    await expect(productFormCreate.headerCreateForm).toBeVisible()
+
+    await productFormCreate.formFill(fakeProduct);
+    for (const addOnGroup of fakeProduct.addOnGroups) {
+      await productFormCreate.addonManager.addAddonGroupButton.click();
+      await productFormCreate.addonManager.addonGroupFormFill(addOnGroup);
+    }
+
+    await productFormCreate.submitButton.click();
+    await expect(productFormCreate.headerCreateForm).toBeVisible();
+
+    const alert = await productFormCreate.page.getByRole('alert')
+
+    await expect(alert).toBeVisible()
+    await expect(alert.getByText('It is mandatory to have at')).toBeVisible()
+    await productFormCreate.backButton.click()
+    await expect( productList.titleListPage).toBeVisible();
+  })
 });

@@ -8,6 +8,7 @@ export class ProductFormCreatePage {
   readonly page: Page;
   readonly addonManager: ProductAddonManager
 
+  readonly backButton: Locator;
   readonly headerCreateForm: Locator;
   readonly inputName: Locator;
   readonly inputName2: Locator;
@@ -26,6 +27,8 @@ export class ProductFormCreatePage {
   constructor(page: Page) {
     this.page = page;
     this.addonManager = new ProductAddonManager(page)
+
+    this.backButton = this.page.locator('div').filter({ hasText: /^arrow_back Create Product$/ }).getByRole('button')
 
     this.headerCreateForm = this.page.getByText("arrow_back Create Product");
 
@@ -124,13 +127,17 @@ export class ProductFormCreatePage {
       await this.checkboxOpenFood.check();
     } else {
       await this.checkboxOpenFood.uncheck();
-    }  
-    
-    await this.inputPrice.click();
-    await this.inputPrice.fill(product.price.toString());
+    }
+
+    const priceIsDisabled = await this.inputPrice.isDisabled()
+
+    if(!priceIsDisabled){
+      await this.inputPrice.click();
+      await this.inputPrice.fill(product.price.toString());
+    }
 
     await this.inputTablePrice.click();
-    await this.inputTablePrice.fill(product.price.toString())
+    await this.inputTablePrice.fill(product.price2.toString())
 
     await this.inputDrsDeposit.click();
     await this.inputDrsDeposit.fill(product.drsDeposit.toString())
