@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { Product } from "../schemas/product";
 import { buildFakeAddOnGroup } from "./addons";
-import { buildFakeDisplayIn } from './displayIn';
+import { buildFakeDisplayIn } from './commons';
 
 
 export const buildFakeProduct = (override: Partial<Product> = {}): Product => {

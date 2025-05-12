@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import {AddOn, AddOnGroup, AddOnGroupModifier, ExtraAddon, ExtraAddonGroup} from "../schemas/addon";
-import { buildFakeDisplayIn } from "./displayIn";
+import { buildFakeDisplayIn } from "./commons";
 
   export const buildFakeAddOnGroupModifier = (
     override: Partial<AddOnGroupModifier> = {}

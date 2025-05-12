@@ -1,5 +1,4 @@
 import { test, Page, BrowserContext, expect } from "@playwright/test";
-import dotenv from "dotenv";
 import { buildFakeCategory } from "@builders/category";
 import { Category } from "schemas/category";
 import { ProductListPage } from "@pages/admin/product/ProductListPage";
@@ -11,7 +10,7 @@ import {ProductPage} from "@pages/admin/product/ProductPage";
 import {buildFakeAddOn, buildFakeAddOnGroup} from "@builders/addons";
 
 
-dotenv.config();
+
 
 interface TestProduct {
   testName:string;
