@@ -60,17 +60,7 @@ export class ProductFormCreatePage {
 
   }
 
-  async addAddonGroup(addonGroup: AddOnGroup) {
-    await this.addonManager.addAddonGroupButton.click()
-    // await this.page.getByText('Options deleteinfoadd').nth(2).click();
-    await this.addonManager.addonGroupFormFill(addonGroup)
 
-
-  }
-
-
-
-  // mover
   async tryFindOption(option: Locator, page: Page): Promise<void> {
   
     try {
@@ -129,15 +119,15 @@ export class ProductFormCreatePage {
       await this.checkboxOpenFood.uncheck();
     }
 
-    const priceIsDisabled = await this.inputPrice.isDisabled()
-
-    if(!priceIsDisabled){
+    if(!product.openFood){
       await this.inputPrice.click();
       await this.inputPrice.fill(product.price.toString());
     }
 
-    await this.inputTablePrice.click();
-    await this.inputTablePrice.fill(product.price2.toString())
+    if(!product.openFood){
+      await this.inputTablePrice.click();
+      await this.inputTablePrice.fill(product.price2.toString())
+    }
 
     await this.inputDrsDeposit.click();
     await this.inputDrsDeposit.fill(product.drsDeposit.toString())
@@ -146,7 +136,4 @@ export class ProductFormCreatePage {
     await this.inputDescription.fill(product.description)
   }
 
-  //   async submit() {
-  //     await this.buttonSubmit.click();
-  //   }
 }

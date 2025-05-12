@@ -36,6 +36,7 @@ test.describe('Admin - Category create, edit and delete', () => {
       
       category.name = category.name + ' edit'
       category.displayIn = ['KIOSK', 'TABLE']
+      await categoryFormEditPage.page.waitForLoadState('networkidle')
       await categoryFormEditPage.formFill(category)
       await categoryFormEditPage.submit();
       

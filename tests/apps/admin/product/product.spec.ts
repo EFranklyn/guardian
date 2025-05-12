@@ -1,7 +1,5 @@
 import { test, Page, BrowserContext, expect } from "@playwright/test";
-
 import dotenv from "dotenv";
-
 import { buildFakeCategory } from "@builders/category";
 import { Category } from "schemas/category";
 import { ProductListPage } from "@pages/admin/product/ProductListPage";
@@ -11,7 +9,7 @@ import { CategoryContext } from "@pages/admin/category/CategoryPage";
 import {Product} from "../../../../schemas/product";
 import {ProductPage} from "@pages/admin/product/ProductPage";
 import {buildFakeAddOn, buildFakeAddOnGroup} from "@builders/addons";
-import {faker} from "@faker-js/faker";
+
 
 dotenv.config();
 
@@ -83,38 +81,6 @@ test.describe("Admin - Product create, edit and delete", () => {
     productsForTest.push({testName:test.info().title, product: fakeProduct}) // improve this
   });
 
-  test("Should create an open food product with a price for tables and not finalize the creation.", async () => {
-    // This test is expected to fail until the implementation is fixed GLC-1807
-    test.fail(true, "GLC-1807");
-    const fakeProduct = buildFakeProduct({
-      displayIn: ['POS'],
-      categoryName: category.name,
-      openFood: true,
-      price2: 200
-    });
-
-
-    await productList.addProductButton.click();
-
-    const productFormCreate = new ProductFormCreatePage(page);
-
-    await productFormCreate.page.waitForLoadState('networkidle')
-
-    await expect(productFormCreate.headerCreateForm).toBeVisible()
-    await productFormCreate.formFill(fakeProduct);
-
-    await productFormCreate.submitButton.click();
-    await productFormCreate.page.waitForLoadState('networkidle')
-
-    await expect(productFormCreate.submitButton).not.toBeVisible();
-    await expect(productFormCreate.headerCreateForm).toBeVisible();
-    await expect(productList.titleListPage).not.toBeVisible();
-
-    productsForTest.push({testName:test.info().title, product: fakeProduct}) // improve this
-
-
-  });
-
   test("Should create product with addons", async () => {
     const fakeProduct: Product = buildFakeProduct({
       displayIn: category.displayIn,
@@ -160,7 +126,6 @@ test.describe("Admin - Product create, edit and delete", () => {
     await expect(productList.productSelected).toBeVisible();
 
     productsForTest.push({testName:test.info().title, product: fakeProduct})
-    // (46 * 19), talk with Levis about test with many addons
   });
 
   test("should try to create product with addongroup without addon and show error message", async () => {

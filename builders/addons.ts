@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { AddOn, AddOnGroup, AddOnGroupModifier } from "../schemas/addon";
+import {AddOn, AddOnGroup, AddOnGroupModifier, ExtraAddon, ExtraAddonGroup} from "../schemas/addon";
 import { buildFakeDisplayIn } from "./displayIn";
 
   export const buildFakeAddOnGroupModifier = (
@@ -66,3 +66,53 @@ import { buildFakeDisplayIn } from "./displayIn";
       ...override,
     };
   };
+
+  export const buildFakeExtraAddOn = (
+      override: Partial<ExtraAddon> = {}
+  ): ExtraAddon => {
+    return {
+      uuid: faker.string.uuid(),
+      name: faker.commerce.productName(),
+      name2: faker.commerce.productAdjective(),
+      price: parseFloat(faker.commerce.price({ min: 1, max: 20 })),
+      price2: 0,
+      vatPrice: 0,
+      vatPerc: 0,
+      drsDeposit: 0,
+      disabled: false,
+      description: faker.commerce.productDescription(),
+      fontColor: "#000000",
+      bgColor1: "#EEEEEE",
+      bgColor2: "#CCCCCC",
+      ...override,
+    }
+  }
+
+
+
+  export const buildFakeExtraAddOnGroup = (
+    override: Partial<ExtraAddonGroup> = {}
+): ExtraAddonGroup => {
+
+  const name = `E2E test ${faker.commerce.productName()}`
+
+  return {
+    uuid: faker.string.uuid(),
+    name,
+    rank: faker.number.int({ min: 1, max: 10 }),
+    maxChoices: 3,
+    minChoices: 1,
+    freeAmount: 0,
+    hideAddonsName: false,
+    showName: false,
+    disabled: false,
+    fontColor: "#000000",
+    bgColor1: "#FFFFFF",
+    bgColor2: "#EEEEEE",
+    modifiers: [buildFakeAddOnGroupModifier()],
+    addons: [buildFakeExtraAddOn()],
+    ...override
+  };
+};
+
+
