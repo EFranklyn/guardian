@@ -61,17 +61,15 @@ export class DiscountFormCreatePage {
         // isso teoricamente resolve o problema de conflitos dos q-portais no DOM
     }
 
-    async chooseAvaiableFor(avaiableFor: string[]) {
-        // await this.page.pause()
+    async chooseAvailableFor(availableFor: string[]) {
         await this.selectAvaiableFor.click();
 
         await this.page.waitForLoadState('load')
         const options = await this.page.getByRole('option').all()
         for(const option of options){
             const availableForName = await option.textContent()
-            console.log('>>>', availableForName)
             const isSelected = Boolean(await option.getAttribute('aria-selected') === 'true')
-            const hasAvailable = availableForName && avaiableFor.includes(availableForName)
+            const hasAvailable = availableForName && availableFor.includes(availableForName)
         if(!isSelected && hasAvailable){
             await option.click()
         }else if(isSelected && !hasAvailable){
@@ -99,7 +97,7 @@ export class DiscountFormCreatePage {
 
         await this.inputDiscountValue.fill(discount.value.toString())
         await this.chooseDiscountType(discount.discountType)
-        await this.chooseAvaiableFor(discount.takeawayOptions)
+        await this.chooseAvailableFor(discount.takeawayOptions)
 
         if( await this.inputMinimumOrderValue.isVisible()){
             await this.inputMinimumOrderValue.click()
@@ -124,11 +122,5 @@ export class DiscountFormCreatePage {
             }
 
         }
-
-
-
     }
-
-
-
 }

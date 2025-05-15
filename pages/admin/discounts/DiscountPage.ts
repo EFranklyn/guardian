@@ -10,12 +10,13 @@ export class DiscountPage {
         this.listPage = new DiscountListPage(page);
 
     }
+    async goto() {
+        await this.listPage.goto()
+    }
 
-    async deleteDiscount(productName: string) {
-        await this.listPage.clearFindProduct()
-        await this.listPage.findProductByName(productName);
-        await this.listPage.selectProduct(productName);
-        await this.listPage.deleteProduct();
+    async deleteDiscount(description: string) {
+        await this.listPage.selectDiscount(description)
+        await this.listPage.deleteDiscount();
         await this.listPage.page.waitForLoadState('networkidle')
 
     }
