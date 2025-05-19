@@ -17,13 +17,6 @@ export default defineConfig({
       }
     },
     {
-      name: 'foodinn-restaurant',
-      use: {
-        headless: false,
-        screenshot: 'on',        
-      },
-    },
-    {
       name: 'foodinn-app-admin',
       testDir: './tests/apps/admin',
       use: {

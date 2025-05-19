@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import test, {expect, Page } from "@playwright/test";
 import { CategoryFormCreatePage } from "./CategoryFormCreatePage";
 import { CategoryFormEditPage } from "./CategoryFormEditPage";
 import { CategoryListPage } from "./CategoryListPage";
@@ -22,6 +22,11 @@ export class CategoryContext {
         await this.listPage.addCategoryButton.click();
         await this.formCreate.formFill(category)
         await this.formCreate.submit();
+        await this.listPage.page.waitForLoadState('networkidle')
+        await test.step(`category ${category.name} created`, async() => {
+            await this.listPage.selectCategory(category.name);
+            await expect(this.listPage.categorySelected).toBeVisible();
+        })
     }
 
     async deleteCategory(categoryName: string) {

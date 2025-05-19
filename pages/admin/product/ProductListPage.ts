@@ -34,6 +34,7 @@ export class ProductListPage {
     }
 
     async clearFindProduct() {
+        await this.inputFindName.waitFor({state: 'visible'});
         await this.inputFindName.click();
         await this.inputFindName.fill('');
         await this.page.keyboard.press('Enter');

@@ -19,6 +19,9 @@ export class DiscountFormCreatePage {
     readonly checkboxSingleUse: Locator;
     readonly submitButton: Locator;
 
+    readonly addProduct: Locator;
+    readonly buttonConfirmProducts: Locator;
+
     constructor(page: Page) {
         this.page = page;
         this.titleListPage = this.page.getByText('arrow_back Create Discount')
@@ -35,6 +38,15 @@ export class DiscountFormCreatePage {
         this.inputUsageLimit =  this.page.getByRole('spinbutton', { name: 'Usage limit' })
         this.checkboxSingleUse =  this.page.getByRole('checkbox', { name: 'Single use per user' })
         this.submitButton = this.page.getByRole('button', { name: 'Submit' })
+        this.addProduct = this.page.getByRole('button').filter({ hasText: 'add' })
+        this.buttonConfirmProducts = this.page.getByRole('button', { name: 'Confirm' })
+    }
+
+    async addProductToDiscount(productName: string) {
+        await this.page.getByRole('textbox', { name: 'Name' }).click();
+        await this.page.getByRole('textbox', { name: 'Name' }).fill(productName);
+        await this.page.waitForLoadState('networkidle')
+        await this.page.getByRole('row', { name: productName }).getByRole('checkbox').check();
     }
 
     async chooseDays(days: string[]=[]) {
