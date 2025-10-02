@@ -1,45 +1,56 @@
+import { test as base, expect } from '@fixtures/admin/loginFixture';
+import { faker } from '@faker-js/faker';
+import dotenv from 'dotenv';
+import { PROTECTED_ROUTES } from './mocks';
 
-
-import { test as base, expect } from '@fixtures/adminFixtures';
+dotenv.config();
 
 const test = base;
 
-test.describe('Admin Login Page - Visuals and Functional Flow', () => {
-  test.use({ storageState: { cookies: [], origins: [] } });
-   
-  test('should render login page with expected UI elements', async ({ loginPage, uiData }) => {
-    const { login } = uiData;
+const VALID_USER = {
+  username: process.env.ADMIN_USERNAME!,
+  password: process.env.ADMIN_PASSWORD!,
+};
 
-    await expect(loginPage.page).toHaveTitle(login.expectedTitle);
-    await expect(loginPage.form).toBeVisible();
-    await expect(loginPage.form).toHaveCount(1);
-    await expect(loginPage.textSignIn).toBeVisible();
-    await expect(loginPage.textSignIn).toHaveText(login.expectedSignInText);
-    await expect(loginPage.usernameIcon).toBeVisible();
-    await expect(loginPage.passwordIcon).toBeVisible();
-    await expect(loginPage.visibilityIcon).toBeVisible();
-    await expect(loginPage.signInButton).toBeVisible();
-    await expect(loginPage.inputFields).toHaveCount(login.expectedInputCount);
-    await expect(loginPage.allButtons).toHaveCount(login.expectedButtonCount);
+
+const routes = PROTECTED_ROUTES
+
+test.describe('Admin Login Page - Functional Not Authenticated', () => {
+  test.describe.configure({ mode: 'parallel' });
+  test.use({ storageState: { cookies: [], origins: [] } });
+  
+  test.beforeEach(async ({ loginPage }) => {    
+    await loginPage.goto();
+  });
+  
+  test('should not log in with random credentials', async ({ loginPage }) => {
+    await loginPage.login(faker.internet.username(), faker.internet.password());
+    await expect(loginPage.errorMessage).toBeVisible();
+    await expect(loginPage.errorMessage).toHaveText(/Incorrect username or password/i);
+  });
+
+  test('should log in with valid credentials and redirect to dashboard', async ({ loginPage }) => {
+    await loginPage.login(VALID_USER.username, VALID_USER.password);
+    await expect(loginPage.page).toHaveURL(/.*dashboard/);
+  });
+  
+  routes.forEach((route) => {
+    test(`should redirect ${route.name} to login when not authenticated`, async ({ loginPage }) => {
+      const path = route.path.replace(/:\w+/g, faker.string.uuid());  
+      await loginPage.page.goto(path);
+      await expect(loginPage.page).toHaveURL(/\/admin\/login/);
+    });
   });
 });
 
-
-test.describe('Admin Losgin Page - Visuals and Functional Flow', () => {
-   
-  test('should render login page with expected UI elements', async ({ loginPage, uiData }) => {
-    const { login } = uiData;
-
-    await expect(loginPage.page).toHaveTitle(login.expectedTitle);
-    await expect(loginPage.form).toBeVisible();
-    await expect(loginPage.form).toHaveCount(1);
-    await expect(loginPage.textSignIn).toBeVisible();
-    await expect(loginPage.textSignIn).toHaveText(login.expectedSignInText);
-    await expect(loginPage.usernameIcon).toBeVisible();
-    await expect(loginPage.passwordIcon).toBeVisible();
-    await expect(loginPage.visibilityIcon).toBeVisible();
-    await expect(loginPage.signInButton).toBeVisible();
-    await expect(loginPage.inputFields).toHaveCount(login.expectedInputCount);
-    await expect(loginPage.allButtons).toHaveCount(login.expectedButtonCount);
+test.describe('Admin Login Page - Functional Authenticated', () => {
+  test.describe.configure({ mode: 'parallel' });  
+  test.beforeEach(async ({ loginPage }) => {    
+    await loginPage.goto();
   });
+
+  test('should make the first access when authenticated on the dashboard page', async ({ loginPage }) => {
+    await expect(loginPage.page).toHaveURL(/.*dashboard/);
+  });
+  
 });

@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:e2e:app:admin": "playwright test --project=foodinn-app-admin"
+    "test:app:admin": "playwright test --project=foodinn-app-admin"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^9.6.0",
     "@pact-foundation/pact": "^15.0.1",
     "@playwright/test": "^1.51.1",
     "@types/axios": "^0.14.4",
@@ -24,6 +25,8 @@
     "vitest": "^3.1.1"
   },
   "dependencies": {
-    "undici": "^7.7.0"
+    "moment": "^2.30.1",
+    "undici": "^7.7.0",
+    "zod": "^3.24.2"
   }
 }
