@@ -1,28 +1,38 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "NodeNext",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "types": ["node"],
-    "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-        "@fixtures/*": ["./fixtures/*"],
-        "@pages/*": ["pages/*"],
-        "@schemas/*": ["data/*"],
-        "@builders/*": ["builders/*"],
-      },
-  },
-  "type": "module",
-  "include": [
-    "src",
-    "tests",
-    "pages", 
-    "data",
-    "playwright.config.ts",
-    "setup"  ],
-  
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "NodeNext",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"types": [
+			"node"
+		],
+		"resolveJsonModule": true,
+		"baseUrl": ".",
+		"paths": {
+			"@fixtures/*": [
+				"./fixtures/*"
+			],
+			"@pages/*": [
+				"pages/*"
+			],
+			"@schemas/*": [
+				"data/*"
+			],
+			"@builders/*": [
+				"builders/*"
+			]
+		}
+	},
+	"type": "module",
+	"include": [
+		"src",
+		"tests",
+		"pages",
+		"data",
+		"playwright.config.ts",
+		"setup"
+	]
 }

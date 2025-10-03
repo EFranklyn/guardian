@@ -1,7 +1,0 @@
-{
-    "expectedTitle": "admin",
-    "expectedSignInText": "Sign In",
-    "expectedInputCount": 2,
-    "expectedButtonCount": 1,
-    "formIdentifier": "Sign In personUsernamelockPasswordvisibility"
-}
