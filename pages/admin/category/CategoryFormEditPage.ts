@@ -1,114 +1,132 @@
-import { Page, Locator } from '@playwright/test';
-import { Category } from 'schemas/category';
+import type { Page, Locator } from '@playwright/test';
+import type { Category } from 'schemas/category';
 
 export class CategoryFormEditPage {
-  readonly page: Page;
-  readonly titleListPage: Locator;
-  readonly headerCreateForm: Locator;
-  readonly inputName: Locator;
-  readonly inputDescription: Locator;
-  readonly inputImageUrl: Locator;
-  readonly selectParentCategory: Locator;
-  readonly inputPosRank: Locator;
-  readonly inputWebsiteRank: Locator;
-  readonly inputPrintRank: Locator;
-  readonly inputVat: Locator;
-  readonly checkboxComposeName: Locator;
-  readonly checkboxDisabled: Locator;
-  readonly selectDisplayIn: Locator;
-  readonly buttonSubmit: Locator;
-  // readonly addCategoryButton: Locator;
+	readonly page: Page;
+	readonly titleListPage: Locator;
+	readonly headerCreateForm: Locator;
+	readonly inputName: Locator;
+	readonly inputDescription: Locator;
+	readonly inputImageUrl: Locator;
+	readonly selectParentCategory: Locator;
+	readonly inputPosRank: Locator;
+	readonly inputWebsiteRank: Locator;
+	readonly inputPrintRank: Locator;
+	readonly inputVat: Locator;
+	readonly checkboxComposeName: Locator;
+	readonly checkboxDisabled: Locator;
+	readonly selectDisplayIn: Locator;
+	readonly buttonSubmit: Locator;
+	// readonly addCategoryButton: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
-    this.titleListPage = this.page.getByRole('main').getByText('Category List');
-    this.headerCreateForm= this.page.getByText('arrow_back Create Category')
+	constructor(page: Page) {
+		this.page = page;
+		this.titleListPage = this.page.getByRole('main').getByText('Category List');
+		this.headerCreateForm = this.page.getByText('arrow_back Create Category');
 
-    this.inputName = this.page.getByRole('textbox', { name: 'Name' });
-    this.inputImageUrl = this.page.getByRole('textbox', { name: 'Image Url' })
-    this.inputPosRank = this.page.getByRole('spinbutton', { name: 'POS Rank' });
-    this.inputWebsiteRank = this.page.getByRole('spinbutton', { name: 'Website Rank' });
-    this.inputPrintRank = this.page.getByRole('spinbutton', { name: 'Print Rank' });
-    this.inputVat = this.page.getByRole('textbox', { name: 'VAT' });
-    this.checkboxComposeName = this.page.getByRole('checkbox', { name: 'Compose Name' });
-    this.checkboxDisabled = this.page.getByRole('checkbox', { name: 'Disabled' });
-    this.selectParentCategory = this.page.getByText('Parent Categoryarrow_drop_down');
-    this.selectDisplayIn = this.page.getByText('Display Inarrow_drop_down');
-    // this.selectDisplayIn = this.page.locator('div').filter({ hasText: /^Display In$/ }).first()
-    this.inputDescription = this.page.getByRole('textbox', { name: 'Description' });
-    this.buttonSubmit = this.page.getByRole('button', { name: 'Submit' })    
-  }
+		this.inputName = this.page.getByRole('textbox', {
+			name: 'Name',
+		});
+		this.inputImageUrl = this.page.getByRole('textbox', {
+			name: 'Image Url',
+		});
+		this.inputPosRank = this.page.getByRole('spinbutton', {
+			name: 'POS Rank',
+		});
+		this.inputWebsiteRank = this.page.getByRole('spinbutton', {
+			name: 'Website Rank',
+		});
+		this.inputPrintRank = this.page.getByRole('spinbutton', {
+			name: 'Print Rank',
+		});
+		this.inputVat = this.page.getByRole('textbox', {
+			name: 'VAT',
+		});
+		this.checkboxComposeName = this.page.getByRole('checkbox', {
+			name: 'Compose Name',
+		});
+		this.checkboxDisabled = this.page.getByRole('checkbox', {
+			name: 'Disabled',
+		});
+		this.selectParentCategory = this.page.getByText('Parent Categoryarrow_drop_down');
+		this.selectDisplayIn = this.page.getByText('Display Inarrow_drop_down');
+		// this.selectDisplayIn = this.page.locator('div').filter({ hasText: /^Display In$/ }).first()
+		this.inputDescription = this.page.getByRole('textbox', {
+			name: 'Description',
+		});
+		this.buttonSubmit = this.page.getByRole('button', {
+			name: 'Submit',
+		});
+	}
 
+	async fillParentCategory(parentCategory: string) {
+		await this.selectParentCategory.click();
+		await this.page
+			.getByRole('option', {
+				name: parentCategory,
+			})
+			.click();
+	}
 
+	async fillDisplayIn(displayIn: string[]) {
+		await this.selectDisplayIn.click();
+		const options = await this.page.getByRole('option').all();
+		for (const opition of options) {
+			const displayInName = await opition.textContent();
+			const isSelected = Boolean((await opition.getAttribute('aria-selected')) === 'true');
+			const hasDisplayIn = displayInName && displayIn.includes(displayInName);
 
-  async fillParentCategory(parentCategory: string) {
-    await this.selectParentCategory.click();
-    await this.page.getByRole('option', { name: parentCategory }).click();
-  }
+			if (!isSelected && hasDisplayIn) {
+				await opition.click();
+			} else if (isSelected && !hasDisplayIn) {
+				await opition.click();
+			}
+		}
+		await this.selectDisplayIn.click();
+	}
 
-  async fillDisplayIn(displayIn: string[]) {
-    await this.selectDisplayIn.click();
-    const options = await this.page.getByRole('option').all()
-    for(const opition of options){
-        const displayInName = await opition.textContent()
-        const isSelected = Boolean(await opition.getAttribute('aria-selected') === 'true')
-        const hasDisplayIn = displayInName && displayIn.includes(displayInName)
+	async formFill(category: Category) {
+		await this.inputName.click();
+		await this.inputName.fill(category.name);
 
-        if(!isSelected && hasDisplayIn){
-            await opition.click()
-        }else if(isSelected && !hasDisplayIn){
-            await opition.click()
-        }        
-      }
-    await this.selectDisplayIn.click();
-  }
+		await this.inputImageUrl.click();
+		await this.inputImageUrl.fill(category.imageUrl);
 
+		await this.inputPosRank.click();
+		await this.inputPosRank.fill(category.rank.toString());
 
-  async formFill(category: Category) {
-    await this.inputName.click();
-    await this.inputName.fill(category.name);
+		await this.inputWebsiteRank.click();
+		await this.inputWebsiteRank.fill(category.onlineRank.toString());
 
-    await this.inputImageUrl.click();
-    await this.inputImageUrl.fill(category.imageUrl);
+		await this.inputPrintRank.click();
+		await this.inputPrintRank.fill(category.printRank.toString());
 
-    await this.inputPosRank.click();  
-    await this.inputPosRank.fill(category.rank.toString());
+		await this.inputVat.click();
+		await this.inputVat.fill(category.vat.toString());
 
-    await this.inputWebsiteRank.click();
-    await this.inputWebsiteRank.fill(category.onlineRank.toString());
+		if (category.composeName) {
+			await this.checkboxComposeName.check();
+		} else {
+			await this.checkboxComposeName.uncheck();
+		}
 
-    await this.inputPrintRank.click();
-    await this.inputPrintRank.fill(category.printRank.toString());
+		if (category.disabled) {
+			await this.checkboxDisabled.check();
+		} else {
+			await this.checkboxDisabled.uncheck();
+		}
 
-    await this.inputVat.click();
-    await this.inputVat.fill(category.vat.toString());
+		await this.inputDescription.click();
+		await this.inputDescription.fill(category.description);
 
-    if (category.composeName) {
-      await this.checkboxComposeName.check();
-    } else {
-      await this.checkboxComposeName.uncheck();
-    }
+		if (category.categoryParentName) {
+			await this.fillParentCategory(category.categoryParentName);
+		}
 
-    if (category.disabled) {
-      await this.checkboxDisabled.check();
-    } else {
-      await this.checkboxDisabled.uncheck();
-    }
+		await this.fillDisplayIn(category.displayIn);
+	}
 
-    await this.inputDescription.click();
-    await this.inputDescription.fill(category.description);
-
-    if(category.categoryParentName){
-      await this.fillParentCategory(category.categoryParentName);
-    }
-
-    await this.fillDisplayIn(category.displayIn); 
-  }
-
-  async submit() {
-    await this.buttonSubmit.click();
-  }
+	async submit() {
+		await this.buttonSubmit.click();
+	}
 }
-
-
-

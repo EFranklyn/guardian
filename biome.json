@@ -7,7 +7,6 @@
 	},
 	"files": {
 		"ignoreUnknown": false
-		
 	},
 	"formatter": {
 		"enabled": true,
@@ -16,20 +15,20 @@
 		"formatWithErrors": true,
 		"lineEnding": "lf",
 		"lineWidth": 100,
-		"bracketSpacing":true,
+		"bracketSpacing": true,
 		"expand": "always"
 	},
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "single",
-			"indentStyle":"tab",
+			"indentStyle": "tab",
 			"indentWidth": 3,
 			"lineWidth": 100,
 			"lineEnding": "lf"
 		},
 		"parser": {
-      		"unsafeParameterDecoratorsEnabled": false
-    	}
+			"unsafeParameterDecoratorsEnabled": false
+		}
 	},
 	"linter": {
 		"enabled": true,
