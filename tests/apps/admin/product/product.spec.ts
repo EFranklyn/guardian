@@ -5,12 +5,9 @@ import { ProductListPage } from "@pages/admin/product/ProductListPage";
 import { ProductFormCreatePage } from "@pages/admin/product/ProductFormCreatePage";
 import { buildFakeProduct } from "@builders/product";
 import { CategoryContext } from "@pages/admin/category/CategoryPage";
-import {Product} from "../../../../schemas/product";
-import {ProductPage} from "@pages/admin/product/ProductPage";
-import {buildFakeAddOn, buildFakeAddOnGroup} from "@builders/addons";
-
-
-
+import { Product } from "../../../../schemas/product";
+import { ProductPage } from "@pages/admin/product/ProductPage";
+import { buildFakeAddOn, buildFakeAddOnGroup } from "@builders/addons";
 
 interface TestProduct {
   testName:string;

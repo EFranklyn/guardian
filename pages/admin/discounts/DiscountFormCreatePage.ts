@@ -1,5 +1,5 @@
-import {Locator, Page} from "@playwright/test";
-import {Discount} from "../../../schemas/discount";
+import { Locator, Page } from "@playwright/test";
+import { Discount } from "../../../schemas/discount";
 
 
 export class DiscountFormCreatePage {
@@ -68,8 +68,6 @@ export class DiscountFormCreatePage {
         await option.click();
         await option.isVisible()
         await option.waitFor({state:'hidden'})
-
-
         // isso teoricamente resolve o problema de conflitos dos q-portais no DOM
     }
 
@@ -82,14 +80,13 @@ export class DiscountFormCreatePage {
             const availableForName = await option.textContent()
             const isSelected = Boolean(await option.getAttribute('aria-selected') === 'true')
             const hasAvailable = availableForName && availableFor.includes(availableForName)
-        if(!isSelected && hasAvailable){
-            await option.click()
-        }else if(isSelected && !hasAvailable){
-            await option.click()
-        }
+            if(!isSelected && hasAvailable){
+                await option.click()
+            }else if(isSelected && !hasAvailable){
+                await option.click()
+            }
         }
         await this.selectAvaiableFor.click();
-
     }
 
 
@@ -132,7 +129,6 @@ export class DiscountFormCreatePage {
             }else{
                 await this.checkboxSingleUse.uncheck()
             }
-
         }
     }
 }

@@ -1,8 +1,6 @@
 import { Page, Locator } from "@playwright/test";
-import { Category } from "schemas/category";
 import { Product } from "schemas/product";
-import {ProductAddonManager} from "@pages/admin/product/ProductAddonManager";
-import {AddOnGroup} from "../../../schemas/addon";
+import { ProductAddonManager } from "@pages/admin/product/ProductAddonManager";
 
 export class ProductFormCreatePage {
   readonly page: Page;

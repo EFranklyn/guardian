@@ -101,7 +101,7 @@ export class CategoryFormEditPage {
     if(category.categoryParentName){
       await this.fillParentCategory(category.categoryParentName);
     }
-    
+
     await this.fillDisplayIn(category.displayIn); 
   }
 

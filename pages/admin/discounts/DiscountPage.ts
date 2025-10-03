@@ -1,4 +1,3 @@
-import {ProductListPage} from "@pages/admin/product/ProductListPage";
 import {Page} from "@playwright/test";
 import {DiscountListPage} from "@pages/admin/discounts/DiscountListPage";
 

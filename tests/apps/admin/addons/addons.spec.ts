@@ -2,10 +2,8 @@ import test, {BrowserContext, expect, Page} from "@playwright/test";
 
 import { AddonListPage } from "@pages/admin/addons/AddonListPage";
 import { buildFakeExtraAddOnGroup} from "@builders/addons";
-import {AddonFormCreatePage} from "@pages/admin/addons/AddonFormCreatePage";
-import {ExtraAddonGroup} from "../../../../schemas/addon";
-
-
+import { AddonFormCreatePage } from "@pages/admin/addons/AddonFormCreatePage";
+import { ExtraAddonGroup } from "../../../../schemas/addon";
 
 test.describe("Extra Addon create and delete", () => {
     test.describe.configure({ mode: "serial" });
@@ -46,8 +44,4 @@ test.describe("Extra Addon create and delete", () => {
         await addonListPage.page.waitForLoadState('networkidle')
         await expect(addonListPage.addonSelected).not.toBeVisible()
     });
-
-
-
-
 })

@@ -13,7 +13,6 @@ export class CategoryListPage {
     this.addCategoryButton =  this.page.getByRole('button').filter({ hasText: 'add' });
     this.categorySelected = this.page.getByRole('row').nth(1);
     this.confirmModalButton = this.page.getByRole('button', { name: 'OK' });
-
   }
 
   async goto() {
@@ -21,7 +20,6 @@ export class CategoryListPage {
     await this.page.waitForURL('**/');
     await this.page.getByRole('button', { name: 'Expand "Registers"' }).click();
     await this.page.getByText('Categories').click();
-
   }
 
   async selectCategory(categoryName: string) {
@@ -38,7 +36,6 @@ export class CategoryListPage {
   async editCategory(){
     await this.categorySelected.getByRole('button').nth(1).click();
   }
-
 }
 
 

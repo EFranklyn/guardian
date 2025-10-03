@@ -48,7 +48,7 @@ export class CategoryFormCreatePage {
 
   async fillDisplayIn(displayIn: string[]) {
     await this.selectDisplayIn.click();
-        
+
     for(const display of displayIn){
       await this.page.getByRole('option', { name: display }).click();
     }

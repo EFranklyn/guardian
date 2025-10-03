@@ -126,8 +126,6 @@ export class ProductAddonManager {
         } else {
             await this.checkboxDisabled.uncheck()
         }
-
-
     }
 
 

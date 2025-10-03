@@ -124,7 +124,4 @@ export class AddonFormCreatePage {
             await this.checkBoxDisabled.uncheck();
         }
     }
-
-
-
 }

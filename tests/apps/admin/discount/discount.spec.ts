@@ -1,14 +1,14 @@
 import test, {BrowserContext, expect, Page} from "@playwright/test";
-import {fakeDiscount} from "@builders/discount";
-import {DiscountListPage} from "@pages/admin/discounts/DiscountListPage";
-import {DiscountFormCreatePage} from "@pages/admin/discounts/DiscountFormCreatePage";
-import {Discount} from "../../../../schemas/discount";
-import {DiscountPage} from "@pages/admin/discounts/DiscountPage";
-import {buildFakeCategory} from "@builders/category";
+import { fakeDiscount } from "@builders/discount";
+import { DiscountListPage } from "@pages/admin/discounts/DiscountListPage";
+import { DiscountFormCreatePage } from "@pages/admin/discounts/DiscountFormCreatePage";
+import { Discount } from "../../../../schemas/discount";
+import { DiscountPage } from "@pages/admin/discounts/DiscountPage";
+import { buildFakeCategory } from "@builders/category";
 import { buildFakeProduct } from "@builders/product";
-import {CategoryContext} from "@pages/admin/category/CategoryPage";
-import {ProductPage} from "@pages/admin/product/ProductPage";
-import {Category} from "../../../../schemas/category";
+import { CategoryContext } from "@pages/admin/category/CategoryPage";
+import { ProductPage } from "@pages/admin/product/ProductPage";
+import { Category } from "../../../../schemas/category";
 import { Product } from "schemas/product";
 
 

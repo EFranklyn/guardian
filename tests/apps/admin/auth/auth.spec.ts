@@ -18,11 +18,11 @@ const routes = PROTECTED_ROUTES
 test.describe('Admin Login Page - Functional Not Authenticated', () => {
   test.describe.configure({ mode: 'parallel' });
   test.use({ storageState: { cookies: [], origins: [] } });
-  
+
   test.beforeEach(async ({ loginPage }) => {    
     await loginPage.goto();
   });
-  
+ 
   test('should not log in with random credentials', async ({ loginPage }) => {
     await loginPage.login(faker.internet.username(), faker.internet.password());
     await expect(loginPage.errorMessage).toBeVisible();

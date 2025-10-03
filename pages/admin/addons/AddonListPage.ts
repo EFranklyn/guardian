@@ -1,5 +1,4 @@
-import {Locator, Page} from "@playwright/test";
-import {ExtraAddonGroup} from "../../../schemas/addon";
+import { Locator, Page } from "@playwright/test";
 
 
 export class AddonListPage {

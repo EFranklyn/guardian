@@ -1,7 +1,6 @@
 import {Locator, Page} from "@playwright/test";
 
 
-
 export class DiscountListPage {
     readonly page: Page;
     readonly titleListPage: Locator;
