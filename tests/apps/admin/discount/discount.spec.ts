@@ -1,15 +1,15 @@
-import test, { type BrowserContext, expect, type Page } from '@playwright/test';
-import { fakeDiscount } from '@builders/discount';
-import { DiscountListPage } from '@pages/admin/discounts/DiscountListPage';
-import { DiscountFormCreatePage } from '@pages/admin/discounts/DiscountFormCreatePage';
-import type { Discount } from '../../../../schemas/discount';
-import { DiscountPage } from '@pages/admin/discounts/DiscountPage';
 import { buildFakeCategory } from '@builders/category';
+import { fakeDiscount } from '@builders/discount';
 import { buildFakeProduct } from '@builders/product';
 import { CategoryContext } from '@pages/admin/category/CategoryPage';
+import { DiscountFormCreatePage } from '@pages/admin/discounts/DiscountFormCreatePage';
+import { DiscountListPage } from '@pages/admin/discounts/DiscountListPage';
+import { DiscountPage } from '@pages/admin/discounts/DiscountPage';
 import { ProductPage } from '@pages/admin/product/ProductPage';
-import type { Category } from '../../../../schemas/category';
+import test, { type BrowserContext, expect, type Page } from '@playwright/test';
 import type { Product } from 'schemas/product';
+import type { Category } from '../../../../schemas/category';
+import type { Discount } from '../../../../schemas/discount';
 
 test.describe('Discount create and delete', () => {
 	test.describe.configure({

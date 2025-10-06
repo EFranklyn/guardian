@@ -1,6 +1,6 @@
-import dotenv from 'dotenv';
+import fs from 'node:fs';
 import { test as setup } from '@playwright/test';
-import fs from 'fs';
+import dotenv from 'dotenv';
 
 dotenv.config();
 

@@ -1,5 +1,5 @@
-import type { Page } from '@playwright/test';
 import { DiscountListPage } from '@pages/admin/discounts/DiscountListPage';
+import type { Page } from '@playwright/test';
 
 export class DiscountPage {
 	public readonly listPage: DiscountListPage;

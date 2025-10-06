@@ -1,12 +1,11 @@
-import type { Discount } from '../schemas/discount';
-import { faker } from '@faker-js/faker';
 import {
 	buildFakeDiscountType,
 	buildFakeDiscountValueType,
 	buildFakeTakeawayType,
 } from '@builders/commons';
+import { faker } from '@faker-js/faker';
 import moment from 'moment';
-import { buildFakeAddOn, buildFakeAddOnGroup } from '@builders/addons';
+import type { Discount } from '../schemas/discount';
 
 export const fakeDiscount = (override: Partial<Discount> = {}): Discount => {
 	const recentDate = faker.date.recent();

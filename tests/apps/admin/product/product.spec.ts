@@ -1,13 +1,13 @@
-import { test, type Page, type BrowserContext, expect } from '@playwright/test';
+import { buildFakeAddOn, buildFakeAddOnGroup } from '@builders/addons';
 import { buildFakeCategory } from '@builders/category';
-import type { Category } from 'schemas/category';
-import { ProductListPage } from '@pages/admin/product/ProductListPage';
-import { ProductFormCreatePage } from '@pages/admin/product/ProductFormCreatePage';
 import { buildFakeProduct } from '@builders/product';
 import { CategoryContext } from '@pages/admin/category/CategoryPage';
-import type { Product } from '../../../../schemas/product';
+import { ProductFormCreatePage } from '@pages/admin/product/ProductFormCreatePage';
+import { ProductListPage } from '@pages/admin/product/ProductListPage';
 import { ProductPage } from '@pages/admin/product/ProductPage';
-import { buildFakeAddOn, buildFakeAddOnGroup } from '@builders/addons';
+import { type BrowserContext, expect, type Page, test } from '@playwright/test';
+import type { Category } from 'schemas/category';
+import type { Product } from '../../../../schemas/product';
 
 interface TestProduct {
 	testName: string;

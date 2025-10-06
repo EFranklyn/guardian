@@ -74,7 +74,7 @@ export class ProductFormCreatePage {
 				timeout: 20,
 			});
 			return;
-		} catch (e) {
+		} catch {
 			await page.keyboard.press('ArrowDown');
 			return this.tryFindOption(option, page);
 		}

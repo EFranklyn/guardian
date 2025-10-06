@@ -1,5 +1,5 @@
-import { test as base, expect } from '@fixtures/admin/categoryFixture';
 import { buildFakeCategory } from '@builders/category';
+import { test as base, expect } from '@fixtures/admin/categoryFixture';
 
 const test = base;
 
@@ -29,7 +29,7 @@ test.describe('Admin - Category create, edit and delete', () => {
 		await categoryListPage.selectCategory(category.name);
 		await categoryListPage.editCategory();
 
-		category.name = category.name + ' edit';
+		category.name = `${category.name} edit`;
 		category.displayIn = [
 			'KIOSK',
 			'TABLE',

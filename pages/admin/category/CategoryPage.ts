@@ -1,8 +1,8 @@
 import test, { expect, type Page } from '@playwright/test';
+import type { Category } from 'schemas/category';
 import { CategoryFormCreatePage } from './CategoryFormCreatePage';
 import { CategoryFormEditPage } from './CategoryFormEditPage';
 import { CategoryListPage } from './CategoryListPage';
-import type { Category } from 'schemas/category';
 
 export class CategoryContext {
 	public readonly listPage: CategoryListPage;
