@@ -1,14 +1,14 @@
-const dayOfWeekList = [
-	'Monday',
-	'Tuesday',
-	'Wednesday',
-	'Thursday',
-	'Friday',
-	'Saturday',
-	'Sunday',
-] as const;
+// const dayOfWeekList = [
+// 	'Monday',
+// 	'Tuesday',
+// 	'Wednesday',
+// 	'Thursday',
+// 	'Friday',
+// 	'Saturday',
+// 	'Sunday',
+// ] as const;
 
-type DayOfWeek = (typeof dayOfWeekList)[number];
+// type DayOfWeek = (typeof dayOfWeekList)[number];
 
 // const discountTypeList = ['Fixed', 'Voucher', 'Order'] as const; // ok
 

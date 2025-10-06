@@ -1,8 +1,7 @@
-import test, { type BrowserContext, expect, type Page } from '@playwright/test';
-
-import { AddonListPage } from '@pages/admin/addons/AddonListPage';
 import { buildFakeExtraAddOnGroup } from '@builders/addons';
 import { AddonFormCreatePage } from '@pages/admin/addons/AddonFormCreatePage';
+import { AddonListPage } from '@pages/admin/addons/AddonListPage';
+import test, { type BrowserContext, expect, type Page } from '@playwright/test';
 import type { ExtraAddonGroup } from '../../../../schemas/addon';
 
 test.describe('Extra Addon create and delete', () => {

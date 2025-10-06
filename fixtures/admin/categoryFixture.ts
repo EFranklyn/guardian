@@ -1,7 +1,7 @@
-import { test as base, expect } from '@playwright/test';
-import { CategoryListPage } from '@pages/admin/category/CategoryListPage';
 import { CategoryFormCreatePage } from '@pages/admin/category/CategoryFormCreatePage';
 import { CategoryFormEditPage } from '@pages/admin/category/CategoryFormEditPage';
+import { CategoryListPage } from '@pages/admin/category/CategoryListPage';
+import { test as base, expect } from '@playwright/test';
 
 // test.beforeAll(async ({ browser }) => {
 //   const page = await browser.newPage();

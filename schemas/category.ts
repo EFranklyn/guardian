@@ -1,8 +1,10 @@
 import { z } from 'zod';
-import { CurrencySchema, RequiredStringSchema, StringSchema } from './commons';
-import { DisplayInSchema } from './displayIn';
+import { RequiredStringSchema } from './commons';
 
-const DISPLAYIN_MESSAGE = 'Please select at least one option';
+//----------------------------------
+// take this away from Zod when possible
+//----------------------------------
+
 
 const dayOfWeekList = [
 	'Monday',
@@ -23,11 +25,7 @@ const displayInPositionList = [
 
 const DisplayInPositionSchema = z.enum(displayInPositionList);
 
-const CategoryDisplayInSchema = z
-	.array(DisplayInSchema, {
-		required_error: DISPLAYIN_MESSAGE,
-	})
-	.nonempty(DISPLAYIN_MESSAGE);
+
 
 const DayOfWeekSchema = z.enum(dayOfWeekList);
 
