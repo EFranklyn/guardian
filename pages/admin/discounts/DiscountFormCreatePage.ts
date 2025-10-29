@@ -8,7 +8,7 @@ export class DiscountFormCreatePage {
 	readonly inputStartDate: Locator;
 	readonly inputEnDate: Locator;
 	readonly selectDays: Locator;
-	readonly selectDiscountTypeValue: Locator;
+	readonly appliesBy: Locator;
 	readonly inputDiscountValue: Locator;
 	readonly selectDiscountType: Locator;
 	readonly selectAvaiableFor: Locator;
@@ -34,19 +34,19 @@ export class DiscountFormCreatePage {
 			name: 'End date',
 		});
 		this.selectDays = this.page.getByText('Daysarrow_drop_down');
-		this.selectDiscountTypeValue = this.page
-			.locator('div')
-			.filter({
-				hasText: /^arrow_drop_down$/,
-			})
-			.nth(1);
-		this.inputDiscountValue = this.page.getByText('euroDiscount value');
-		this.selectDiscountType = this.page
+		this.appliesBy = this.page
 			.locator('div')
 			.filter({
 				hasText: /^arrow_drop_down$/,
 			})
 			.nth(2);
+		this.inputDiscountValue = this.page.getByText('euroValue');
+		this.selectDiscountType = this.page
+			.locator('div')
+			.filter({
+				hasText: /^arrow_drop_down$/,
+			})
+			.nth(3);
 		this.selectAvaiableFor = this.page.getByText('Available forarrow_drop_down');
 		this.inputMinimumOrderValue = this.page.getByRole('textbox', {
 			name: 'Minimum value to discount',
@@ -104,7 +104,7 @@ export class DiscountFormCreatePage {
 	}
 
 	async chooseDiscountTypeValue(discountTypeValue: string) {
-		await this.selectDiscountTypeValue.click();
+		await this.appliesBy.click();
 		await this.page
 			.getByRole('option', {
 				name: discountTypeValue,

@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"codegen":"npx playwright codegen",
 		"test:app:admin": "playwright test --project=foodinn-app-admin",
 		"lint": "biome lint . && eslint tests --ext .ts",
 		"lint:fix": "biome lint --write .",

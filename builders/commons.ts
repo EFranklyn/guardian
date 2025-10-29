@@ -15,7 +15,6 @@ const buildFakeDiscountType = (
 	discountType: string[] = [
 		'Fixed',
 		'Voucher',
-		'Order',
 	],
 ): string => {
 	return faker.helpers.arrayElement(discountType);
