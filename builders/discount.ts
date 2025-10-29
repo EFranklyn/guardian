@@ -7,6 +7,18 @@ import { faker } from '@faker-js/faker';
 import moment from 'moment';
 import type { Discount } from '../schemas/discount';
 
+const buildFakeAppliesTo = (
+	discountType: string[] = [
+		'Items',
+		'Subtotal',
+		'Delivery Fee',
+	],
+): string => {
+	return faker.helpers.arrayElement(discountType);
+};
+
+
+
 export const fakeDiscount = (override: Partial<Discount> = {}): Discount => {
 	const recentDate = faker.date.recent();
 
@@ -42,7 +54,11 @@ export const fakeDiscount = (override: Partial<Discount> = {}): Discount => {
 		),
 	];
 
+
+
+
 	const fakeValue = {
+		appliesTo: buildFakeAppliesTo(),
 		discountType: buildFakeDiscountType(),
 		description: `E2E test ${faker.commerce.productName()}`,
 		startDate: moment(pastDate).format('DD/MM/YYYY'),
@@ -57,7 +73,7 @@ export const fakeDiscount = (override: Partial<Discount> = {}): Discount => {
 			}),
 		),
 		products: [],
-		voucherCode: `E2E test ${faker.string.octal({
+		voucherCode: `E2Etest${faker.string.octal({
 			length: 3,
 		})}`,
 		usageLimit: faker.number.int({
